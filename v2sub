@@ -97,28 +97,37 @@ def closeiptableRedirect():
 mode = 'changeNode'
 v2rayConfigLocal='/etc/v2ray/config.json'
 testFileUrl="http://cachefly.cachefly.net/10mb.test"
+subFilePath = os.path.join(os.getcwd(), "v2sub.conf")
+
+proxies={}
 if len(sys.argv) == 2:
     mode = sys.argv[1]
+if os.name == 'linux':
+    # 鉴权
+    if os.geteuid() != 0:
+        print("您需要切换到 Root 身份才可以使用本脚本。尝试在命令前加上 sudo?\n")
+        exit()
 
-# 鉴权
-if os.geteuid() != 0:
-    print("您需要切换到 Root 身份才可以使用本脚本。尝试在命令前加上 sudo?\n")
-    exit()
+    #判断v2ray服务是否安装
+    if subprocess.call("systemctl is-enabled v2ray.service", shell=True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL) == 1:
+        print('检测到v2ray未安装,将执行官方脚本安装v2ray,如果下载速度缓慢,请考虑手动本地安装v2ray,参考地址：https://www.v2ray.com/chapter_00/install.html')
+        print('正在下载官方脚本')
+        subprocess.run("wget https://install.direct/go.sh", shell=True, stdout = subprocess.DEVNULL)
+        print('正在安装v2ray')
+        subprocess.check_call('bash go.sh', shell=True)
+        print('执行清理工作')
+        subprocess.run('rm -rf go.sh', shell=True)
+elif os.name =="nt":
+    print("使用系统代理")
+    proxies = { "http": "http://linyaoji:fuckyou-321@10.255.251.141:8080", "https": "http://linyaoji:fuckyou-321@10.255.251.141:8080"}    
+elif os.name =="darwin":
+    pass
 
-#判断v2ray服务是否安装
-if subprocess.call("systemctl is-enabled v2ray.service", shell=True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL) == 1:
-    print('检测到v2ray未安装,将执行官方脚本安装v2ray,如果下载速度缓慢,请考虑手动本地安装v2ray,参考地址：https://www.v2ray.com/chapter_00/install.html')
-    print('正在下载官方脚本')
-    subprocess.run("wget https://install.direct/go.sh", shell=True, stdout = subprocess.DEVNULL)
-    print('正在安装v2ray')
-    subprocess.check_call('bash go.sh', shell=True)
-    print('执行清理工作')
-    subprocess.run('rm -rf go.sh', shell=True)
 
 
 # 本脚本的配置文件，目前的作用是仅存储用户输入的订阅地址，这样用户再次启动脚本时，就无需再输入订阅地址。
 # 预设的存储的路径为存储到用户的 HOME 内。
-subFilePath = os.path.expandvars('$HOME') + '/.v2sub.conf'
+
 # 获取订阅地址
 if not os.path.exists(subFilePath):
     open(subFilePath, 'w+')
@@ -143,7 +152,11 @@ print('如果您的订阅地址有误，请删除或编辑 '+subFilePath)
 print("\n开始从订阅地址中读取服务器节点… 如等待时间过久，请检查网络。\n")
 
 # 获取订阅信息
-urldata = requests.get(subLink).text
+urldata = requests.get(subLink,proxies=proxies).text
+
+print(urldata)
+
+
 serverListLink = decode(urldata).splitlines(False)
 for i in range(len(serverListLink)):
     if serverListLink[i].startswith('ss://'):
