@@ -33,3 +33,6 @@ chmod 777 v2sub;
 
 前面的数字就是序号，重新执行
 ``./v2sub;``输入对应的序号，即可选择该节点。
+
+
+https://jiang.netlify.com

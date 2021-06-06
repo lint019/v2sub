@@ -1,0 +1,85 @@
+{
+  "remark": "\u4e0d\u8981\u611f\u6069\u90a3\u4e9b\u79cd\u6c34\u7a3b\u7684\u3002",
+  "log": {
+    "access": "./log/v2ray/access.log",
+    "error": "./log/v2ray/error.log",
+    "logLevel": "none"
+  },
+  "inbounds": [
+    {
+      "port": 10083,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "udp": true
+      },
+      "tag": "in"
+    }
+  ],
+  "outbounds": [
+    {
+      "settings": {},
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "settings": {},
+      "protocol": "blackhole",
+      "tag": "blocked"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.19.27.26",
+            "port": 443,
+            "users": [
+              {
+                "id": "b47f1d5c-a228-4b24-809e-626852910b1a",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/xrayvws",
+          "headers": {
+            "Host": "luba.1808.cf"
+          }
+        }
+      },
+      "tag": "out"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "AsIs",
+      "rules": [
+        {
+          "type": "field",
+          "ip": [
+            "geoip:cn",
+            "geoip:private"
+          ],
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "inboundTag": [
+            "in"
+          ],
+          "outboundTag": "out"
+        }
+      ]
+    }
+  }
+}

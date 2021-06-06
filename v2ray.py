@@ -25,9 +25,10 @@ class V2ray(Node):
 
     def formatConfig(self):
         v2rayConf = {
+          "remark":self.remark,
           "log" : {
-              "access" : "/var/log/v2ray/access.log",
-              "error":"/var/log/v2ray/error.log",
+              "access" : "./log/v2ray/access.log",
+              "error":"./log/v2ray/error.log",
               "logLevel": "none"
           },
           "inbounds": [
@@ -39,7 +40,7 @@ class V2ray(Node):
                 "udp": True
               },
               "tag": "in"
-            }
+            },
           ],
           "outbounds": [
             {

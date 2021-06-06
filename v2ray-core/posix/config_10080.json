@@ -1,0 +1,85 @@
+{
+  "remark": "\u53efkyc-NO.2 cdn",
+  "log": {
+    "access": "./log/v2ray/access.log",
+    "error": "./log/v2ray/error.log",
+    "logLevel": "none"
+  },
+  "inbounds": [
+    {
+      "port": 10080,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "udp": true
+      },
+      "tag": "in"
+    }
+  ],
+  "outbounds": [
+    {
+      "settings": {},
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "settings": {},
+      "protocol": "blackhole",
+      "tag": "blocked"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.19.10.101",
+            "port": 443,
+            "users": [
+              {
+                "id": "c0fc8428-034f-414b-9dfb-52b5cf7d25bb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/c0fc8428-034f-414b-9dfb-52b5cf7d25bb-vmess",
+          "headers": {
+            "Host": "throbbing-sun-15ac.2ye.workers.dev"
+          }
+        }
+      },
+      "tag": "out"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "AsIs",
+      "rules": [
+        {
+          "type": "field",
+          "ip": [
+            "geoip:cn",
+            "geoip:private"
+          ],
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "inboundTag": [
+            "in"
+          ],
+          "outboundTag": "out"
+        }
+      ]
+    }
+  }
+}

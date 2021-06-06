@@ -1,0 +1,84 @@
+{
+  "log": {
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "logLevel": "none"
+  },
+  "inbounds": [
+    {
+      "port": 1080,
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "udp": true
+      },
+      "tag": "in"
+    }
+  ],
+  "outbounds": [
+    {
+      "settings": {},
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "settings": {},
+      "protocol": "blackhole",
+      "tag": "blocked"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.19.64.83",
+            "port": 443,
+            "users": [
+              {
+                "id": "e1934f6e-ae2c-41e7-8877-844152137c1e",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/xrayvws",
+          "headers": {
+            "Host": "buy.1808.cf"
+          }
+        }
+      },
+      "tag": "out"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "AsIs",
+      "rules": [
+        {
+          "type": "field",
+          "ip": [
+            "geoip:cn",
+            "geoip:private"
+          ],
+          "outboundTag": "direct"
+        },
+        {
+          "type": "field",
+          "inboundTag": [
+            "in"
+          ],
+          "outboundTag": "out"
+        }
+      ]
+    }
+  }
+}

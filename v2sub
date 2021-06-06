@@ -11,6 +11,15 @@ import json
 import subprocess
 
 import requests
+import logging
+import argparse
+
+import queue
+import threading
+import time
+
+
+logger = logging.getLogger(__name__)
 
 from shadowsocks import Shadowsocks
 from v2ray import V2ray
@@ -87,147 +96,377 @@ def openiptableRedirect():
     try:
         subprocess.call("iptables -t nat -A V2RAY -p tcp --match multiport ! --dports 12345,1080,22 -j REDIRECT --to-ports 12345",shell=True, stdout = subprocess.DEVNULL)
     except BaseException:
-        print('以存在相应规则!跳过!')
+        logging.debug('以存在相应规则!跳过!')
     subprocess.call("iptables -t nat -A OUTPUT -p tcp -j V2RAY", shell=True, stdout = subprocess.DEVNULL)
 
 def closeiptableRedirect():
     subprocess.call("iptables -t nat -F V2RAY", shell=True, stdout = subprocess.DEVNULL)
 
 
-mode = 'changeNode'
-v2rayConfigLocal='/etc/v2ray/config.json'
+v2rayConfigLocal=os.path.join(os.getcwd(),"v2ray-core",os.name, "config.json")
+v2rayExecLocal=os.path.join(os.getcwd(),"v2ray-core", os.name,"v2ray")
+TEST_PORT_BASE = 10080
 testFileUrl="http://cachefly.cachefly.net/10mb.test"
-subFilePath = os.path.join(os.getcwd(), "v2sub.conf")
+# google_url = "https://www.google.com"
+google_url = "https://www.twitter.com"
+exitFlag = 0
 
-proxies={}
-if len(sys.argv) == 2:
-    mode = sys.argv[1]
-if os.name == 'linux':
-    # 鉴权
-    if os.geteuid() != 0:
-        print("您需要切换到 Root 身份才可以使用本脚本。尝试在命令前加上 sudo?\n")
-        exit()
+class Manager(object):
+    def __init__(self,cmd,args):
+        self.cmd = cmd
+        self.args = args
+        self.p = 0
 
-    #判断v2ray服务是否安装
-    if subprocess.call("systemctl is-enabled v2ray.service", shell=True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL) == 1:
-        print('检测到v2ray未安装,将执行官方脚本安装v2ray,如果下载速度缓慢,请考虑手动本地安装v2ray,参考地址：https://www.v2ray.com/chapter_00/install.html')
-        print('正在下载官方脚本')
-        subprocess.run("wget https://install.direct/go.sh", shell=True, stdout = subprocess.DEVNULL)
-        print('正在安装v2ray')
-        subprocess.check_call('bash go.sh', shell=True)
-        print('执行清理工作')
-        subprocess.run('rm -rf go.sh', shell=True)
-elif os.name =="nt":
-    print("使用系统代理")
-    proxies = { "http": "http://linyaoji:fuckyou-321@10.255.251.141:8080", "https": "http://linyaoji:fuckyou-321@10.255.251.141:8080"}    
-elif os.name =="darwin":
-    pass
+    def restart(self):
+        self.stop()
 
+        logger.debug("create cmd %s"%self.cmd)
+        self.p = subprocess.Popen([self.cmd,self.args])
+        # self.p = subprocess.Popen(self.cmd,shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        time.sleep(3)
+        if self.p.poll() is not None:
+            return True
+        
+        return False
 
+    def stop(self):
+        os.system("killall v2ray")
+        # if self.p !=0:
+        #     self.p.terminate()
+        
+class SpeedTest(object):
+    def __init__(self,config,id):
+        self.config = config
+        self.listen_port = TEST_PORT_BASE+id
+        self.p =0
+        
+    def run_v2ray(self):
 
-# 本脚本的配置文件，目前的作用是仅存储用户输入的订阅地址，这样用户再次启动脚本时，就无需再输入订阅地址。
-# 预设的存储的路径为存储到用户的 HOME 内。
-
-# 获取订阅地址
-if not os.path.exists(subFilePath):
-    open(subFilePath, 'w+')
-
-subFile = open(subFilePath, 'r')
-subLink = subFile.read().strip()
-subFile.close()
-
-if not subLink:
-    print('您还没有输入订阅地址，请输入订阅地址。')
-    try:
-        subLink = input('订阅地址：')
-    except KeyboardInterrupt:
-        exit()
-    subFile = open(subFilePath, 'w+')
-    subFile.write(subLink)
-    subFile.close()
-else:
-    print('订阅地址：'+subLink)
-print('如果您的订阅地址有误，请删除或编辑 '+subFilePath)
-
-print("\n开始从订阅地址中读取服务器节点… 如等待时间过久，请检查网络。\n")
-
-# 获取订阅信息
-urldata = requests.get(subLink,proxies=proxies).text
-
-print(urldata)
-
-
-serverListLink = decode(urldata).splitlines(False)
-for i in range(len(serverListLink)):
-    if serverListLink[i].startswith('ss://'):
-      # ss node
-      base64Str = serverListLink[i].replace('ss://', '')
-      base64Str = urllib.parse.unquote(base64Str)
-      origin = decode(base64Str[0 : base64Str.index('#')])
-      remark = base64Str[base64Str.index('#') + 1 :]
-      security = origin[0 : origin.index(':')]
-      password = origin[origin.index(':') + 1 : origin.index('@')]
-      ipandport = origin[origin.index('@') + 1 : ]
-      ip = ipandport[0: ipandport.index(':')]
-      port = int(ipandport[ipandport.index(':') + 1:])
-      print('【' + str(i) + '】' + remark)
-      ssNode = Shadowsocks(ip, port, remark, security, password)
-      serverListLink[i] = ssNode
-    else:
-        # vmess
-        base64Str = serverListLink[i].replace('vmess://', '')
-        jsonstr = decode(base64Str)
-        serverNode = json.loads(jsonstr)
-        print('【' + str(i) + '】' + serverNode['ps'])
-        v2Node = V2ray(serverNode['add'], int(serverNode['port']), serverNode['ps'], 'auto', serverNode['id'], int(serverNode['aid']), serverNode['net'], serverNode['type'], serverNode['host'], serverNode['path'], serverNode['tls'])
-        serverListLink[i] = v2Node
-
-if mode == 'changeNode':
-    while True:
-        try:
-            setServerNodeId = int(input("\n请输入要切换的节点编号："))
-        except KeyboardInterrupt:
-            break
-        except BaseException:
-            continue
-        subprocess.call('ping ' + serverListLink[setServerNodeId].ip + ' -c 3 -w 10', shell=True)
-        inputStr = input('确定要使用该节点吗？[y/n/exit]  ')
-        if inputStr == 'y':
-
-            jsonObj = serverListLink[setServerNodeId].formatConfig()
-            jsonObj = askfollowRedirect(jsonObj)
-            json.dump(jsonObj, open(v2rayConfigLocal, 'w'), indent=2)
-            print("\n重启 v2ray 服务……\n")
-            subprocess.call('systemctl restart v2ray.service', shell=True)
-            print('地址切换完成')
-            print('代理端口协议：socks5')
-            print('代理地址: 127.0.0.1')
-            print('代理端口号：1080')
-            exit()
-        elif inputStr == 'n':
-            continue
-        else:
-            break
-else:
-    # copy config.json
-    print("\n当前模式为测速模式\n")
-    print("\n正在备份现有配置文件 %s\n" % v2rayConfigLocal)
-    subprocess.call('cp ' + v2rayConfigLocal + ' ' + v2rayConfigLocal + '.bak', shell=True)
-    for i in range(len(serverListLink)):
-        json.dump(serverListLink[i].formatConfig(), open(v2rayConfigLocal, 'w'), indent=2)
-        subprocess.call('systemctl restart v2ray.service', shell=True)
+        # logger.debug(json.dumps(self.config))
+        tmp = os.path.join(os.getcwd(),"v2ray-core",os.name, "config_%d.json"%self.listen_port)
+        self.config['inbounds'][0]['port']= self.listen_port
+        self.config['inbounds'][0]['protocol']= "http"
+        logger.debug(json.dumps(self.config))
+        json.dump(self.config, open(tmp, 'w'), indent=2)
+        logger.debug("run test: %s %s"%(v2rayExecLocal,tmp))
+        self.p = subprocess.Popen([v2rayExecLocal,'-config',tmp])
+    
+    def start_download(self):
         try:
             time.sleep(5)
-            output = subprocess.check_output('curl -o /dev/null -s -w %{speed_download} -x socks5://127.0.0.1:1080 ' + testFileUrl, shell=True)
+            proxies = {"http": "http://127.0.0.1:%d"%self.listen_port}
+            # requests.get(testFileUrl,proxies=proxies,stream=True)
+            resp = requests.get(google_url,proxies=proxies,stream=True)
+            if resp.status_code == 200:
+                print ('[%s] OK!'%self.config['remark'])
+            else:
+                print ('[%s] Boo!'%self.config['remark'])
+            # cmd = "curl -o /dev/null -s -w %{speed_download} -x socks5://127.0.0.1:%d %s"%(self.listen_port, testFileUrl)
+            # output = subprocess.check_output(cmd, shell=True)
         except KeyboardInterrupt:
-            break
-        except BaseException:
+            pass
+        except Exception as e:
             output = b'0.000'
-        print('【%d】%s : %d kb/s' %(i, serverListLink[i].remark, float(output) / 1000))
-    print("\n正在恢复现有配置文件 %s\n" % v2rayConfigLocal)
-    subprocess.call('mv ' + v2rayConfigLocal + '.bak ' + v2rayConfigLocal , shell=True)
-    subprocess.call('systemctl restart v2ray.service', shell=True)
+            print ('[%s] error [%s]!'%(self.config['remark'],e))
+        output =0
+        # print('%d : %d kb/s' %(self.listen_port, float(output) / 1000))
+
+    def shutdown(self):
+        if self.p !=0:
+            self.p.terminate()
+        
+    
+
+def ping_node(ip):
+    if os.name == 'linux':
+        subprocess.call('ping ' + ip + ' -c 3 -w 10', shell=True)
+    elif os.name =="nt":
+        pass
+    elif os.name =="posix":
+        subprocess.call('ping ' + ip + ' -c 3 ', shell=True)
+        logging.info("ping %s"%ip)
 
 
+def backup_config():
+    if os.name == 'linux':
+        subprocess.call('cp ' + v2rayConfigLocal + ' ' + v2rayConfigLocal + '.bak', shell=True)        
+    elif os.name =="nt":
+        pass
+    elif os.name =="posix":
+        subprocess.call('cp ' + v2rayConfigLocal + ' ' + v2rayConfigLocal + '.bak', shell=True)        
+    
+def restore_config():
+    if os.name == 'linux':
+        subprocess.call('mv ' + v2rayConfigLocal + '.bak ' + v2rayConfigLocal , shell=True)
+    elif os.name =="nt":
+        pass
+    elif os.name =="posix":
+        subprocess.call('mv ' + v2rayConfigLocal + '.bak ' + v2rayConfigLocal , shell=True)
+    
+def change_node(jsonObj,mgr):
+    if os.name == 'linux':
+        logging.debug("\n重启 v2ray 服务……\n")
+        subprocess.call('systemctl restart v2ray.service', shell=True)
+        logging.debug('地址切换完成')
+        logging.debug('代理端口协议：socks5')
+        logging.debug('代理地址: 127.0.0.1')
+        logging.debug('代理端口号：1080')
+        pass
+    elif os.name =="nt":
+        pass
+    elif os.name =="posix":
+        restart_v2ray(mgr)
+    print(os.name)    
+
+def restart_v2ray(mgr):    
+    return mgr.restart()        
+    
+# work_queue
+# queue_lock
+
+# work_queue = queue.Queue(10)        
+queue_lock = threading.Lock()
+class myThread (threading.Thread):
+    def __init__(self, threadID,wq):
+        threading.Thread.__init__(self)
+        self.id = threadID
+        self.work_queue = wq
+        self.exit = False
+        # self.queue_lock = queueLock
+        
+    def finish(self):
+        self.exit = True
+
+    def run(self):
+        logger.debug("Starting %d"%self.id)
+        process_data(self.id,self.work_queue)   
+        # while not self.exit:
+        #     queue_lock.acquire()
+        #     # logger.debug("read %d"%id)
+        #     if not self.work_queue.empty():
+        #         # logger.debug("get queue %d"%id)
+        #         config = self.work_queue.get()            
+        #         queue_lock.release()
+        #         do_test(id,config)            
+        #     else:
+        #         # logger.debug("empty queue %d"%id)
+        #         queue_lock.release()             
+        logger.debug("Exiting %d" % self.id)
+
+def do_test(id,config):
+    try:
+        test = SpeedTest(config,id)
+        test.run_v2ray()
+        test.start_download()
+        test.shutdown()
+    except Exception as e:
+        logger.error(e)
+def process_data(id,work_queue):            
+    while not exitFlag:
+        queue_lock.acquire()
+        # logger.debug("read %d"%id)
+        if not work_queue.empty():
+            # logger.debug("get queue %d"%id)
+            config = work_queue.get()            
+            queue_lock.release()
+            do_test(id,config)            
+        else:
+            # logger.debug("empty queue %d"%id)
+            queue_lock.release()
+            break
+            
+        # time.sleep(3)
+
+    
 
 
+def start(mode):
+    # mode = 'changeNode'
+    # v2rayConfigLocal='/etc/v2ray/config.json'
+    
+    
+    subFilePath = os.path.join(os.getcwd(), "v2sub.conf")
+
+    proxies={}
+    # cmd = "%s %s "%(v2rayExecLocal,v2rayConfigLocal)
+    # exec = Manager(cmd,"")
+    exec = Manager(v2rayExecLocal,v2rayConfigLocal)
+    if len(sys.argv) == 2:
+        mode = sys.argv[1]
+    if os.name == 'linux':
+        # 鉴权
+        if os.geteuid() != 0:
+            logging.debug("您需要切换到 Root 身份才可以使用本脚本。尝试在命令前加上 sudo?\n")
+            exit()
+
+        #判断v2ray服务是否安装
+        if subprocess.call("systemctl is-enabled v2ray.service", shell=True, stdout = subprocess.DEVNULL, stderr = subprocess.DEVNULL) == 1:
+            logging.debug('检测到v2ray未安装,将执行官方脚本安装v2ray,如果下载速度缓慢,请考虑手动本地安装v2ray,参考地址：https://www.v2ray.com/chapter_00/install.html')
+            logging.debug('正在下载官方脚本')
+            subprocess.run("wget https://install.direct/go.sh", shell=True, stdout = subprocess.DEVNULL)
+            logging.debug('正在安装v2ray')
+            subprocess.check_call('bash go.sh', shell=True)
+            logging.debug('执行清理工作')
+            subprocess.run('rm -rf go.sh', shell=True)
+    elif os.name =="nt":
+        logging.debug("使用系统代理")
+        proxies = { "http": "http://linyaoji:fuckyou-321@10.255.251.141:8080", "https": "http://linyaoji:fuckyou-321@10.255.251.141:8080"}    
+    elif os.name =="posix":
+        pass    
+    # 本脚本的配置文件，目前的作用是仅存储用户输入的订阅地址，这样用户再次启动脚本时，就无需再输入订阅地址。
+    # 预设的存储的路径为存储到用户的 HOME 内。
+
+    # 获取订阅地址
+    if not os.path.exists(subFilePath):
+        open(subFilePath, 'w+')
+
+    subFile = open(subFilePath, 'r')
+    subLink = subFile.read().strip()
+    subFile.close()
+
+    if not subLink:
+        logging.debug('您还没有输入订阅地址，请输入订阅地址。')
+        try:
+            subLink = input('订阅地址：')
+        except KeyboardInterrupt:
+            exit()
+        subFile = open(subFilePath, 'w+')
+        subFile.write(subLink)
+        subFile.close()
+    else:
+        logging.debug('订阅地址：'+subLink)
+    logging.debug('如果您的订阅地址有误，请删除或编辑 '+subFilePath)
+
+    logging.debug("\n开始从订阅地址中读取服务器节点… 如等待时间过久，请检查网络。\n")
+
+    # 获取订阅信息
+    urldata = requests.get(subLink,proxies=proxies).text
+
+    # logging.debug(urldata)
+
+
+    serverListLink = decode(urldata).splitlines(False)
+    for i in range(len(serverListLink)):
+        try:
+            if serverListLink[i].startswith('ss://'):
+            # ss node
+                base64Str = serverListLink[i].replace('ss://', '')
+                base64Str = urllib.parse.unquote(base64Str)
+                origin = decode(base64Str[0 : base64Str.index('#')])
+                remark = base64Str[base64Str.index('#') + 1 :]
+                security = origin[0 : origin.index(':')]
+                password = origin[origin.index(':') + 1 : origin.index('@')]
+                ipandport = origin[origin.index('@') + 1 : ]
+                ip = ipandport[0: ipandport.index(':')]
+                port = int(ipandport[ipandport.index(':') + 1:])
+                logging.debug('【' + str(i) + '】' + remark)
+                ssNode = Shadowsocks(ip, port, remark, security, password)
+                serverListLink[i] = ssNode
+            else:
+                # vmess
+                base64Str = serverListLink[i].replace('vmess://', '')
+                jsonstr = decode(base64Str)
+                serverNode = json.loads(jsonstr)
+                logging.debug('【' + str(i) + '】' + serverNode['ps'])
+                v2Node = V2ray(serverNode['add'], int(serverNode['port']), serverNode['ps'], 'auto', serverNode['id'], int(serverNode['aid']), serverNode['net'], serverNode['type'], serverNode['host'], serverNode['path'], serverNode['tls'])
+                serverListLink[i] = v2Node
+        except BaseException:
+            logger.error("%d node error."%i)
+            pass
+
+
+    if mode == 'change_node':
+        while True:
+            try:
+                for i in range(len(serverListLink)):
+                    if isinstance(serverListLink[i],V2ray):
+                        print('[' + str(i) + ']' + serverListLink[i].remark)
+                setServerNodeId = int(input("\n请输入要切换的节点编号："))
+            except KeyboardInterrupt:
+                break
+            except BaseException:
+                continue
+            ping_node(serverListLink[i].ip)
+            inputStr = input('确定要使用该节点吗？[y/n/exit]  ')
+            if inputStr == 'y':
+                jsonObj = serverListLink[setServerNodeId].formatConfig()
+                # jsonObj = askfollowRedirect(jsonObj)
+                json.dump(jsonObj, open(v2rayConfigLocal, 'w'), indent=2)
+                change_node(jsonObj,exec)
+                exit()
+            elif inputStr == 'n':
+                continue
+            else:
+                break
+    elif mode == "speed_test":
+        
+        
+        workQueue = queue.Queue(len(serverListLink))
+        threads = []    
+
+                # logger.debug("start fill queue" )
+        queue_lock.acquire()
+        for i in range(len(serverListLink)):
+             if isinstance(serverListLink[i],V2ray):
+                # logger.debug("put queue" )
+                workQueue.put(serverListLink[i].formatConfig())
+        queue_lock.release()
+        # logger.debug("finish fill queue" )
+
+        for i in  range(10):
+            thread = myThread(i,workQueue)
+            thread.start()
+            threads.append(thread)
+# 创建新线程
+        
+
+
+        
+      # 填充队列
+
+        # 等待队列清空
+        while not workQueue.empty():
+            pass
+
+        
+        exitFlag = 0
+        # 等待所有线程完成
+        for t in threads:
+            t.finish()
+            t.join()
+
+        logger.debug("speed test done.")
+
+        # copy config.json
+        
+        # print("\n正在备份现有配置文件 %s\n" % v2rayConfigLocal)
+        # backup_config()
+        # print("\n当前模式为测速模式\n")
+        # for i in range(len(serverListLink)):            
+        #     if isinstance(serverListLink[i],V2ray) or not restart_v2ray(exec):                
+        #         print("%i start fail."%i)
+        #         continue
+        #     json.dump(serverListLink[i].formatConfig(), open(v2rayConfigLocal, 'w'), indent=2)
+        #     try:
+        #         time.sleep(5)
+        #         output = subprocess.check_output('curl -o /dev/null -s -w %{speed_download} -x socks5://127.0.0.1:1080 ' + testFileUrl, shell=True)
+        #     except KeyboardInterrupt:
+        #         break
+        #     except BaseException:
+        #         output = b'0.000'
+        #     print('【%d】%s : %d kb/s' %(i, serverListLink[i].remark, float(output) / 1000))
+        # print("\n正在恢复现有配置文件 %s\n" % v2rayConfigLocal)
+        # restore_config()
+        # restart_v2ray(exec)
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description="多媒体http服务",
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument('-m','--mode', help="change_node | speed_test", default='change_node')    
+    parser.add_argument("-v", "--verbose", help="Verbose logging", action='store_true')
+    args = parser.parse_args()
+    if args.verbose:
+            logging.getLogger().setLevel(logging.DEBUG)
+
+    start(args.mode)
