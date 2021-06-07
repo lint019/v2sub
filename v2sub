@@ -17,7 +17,7 @@ import argparse
 import queue
 import threading
 import time
-
+import pyqrcode
 
 logger = logging.getLogger(__name__)
 
@@ -105,10 +105,11 @@ def closeiptableRedirect():
 
 v2rayConfigLocal=os.path.join(os.getcwd(),"v2ray-core",os.name, "config.json")
 v2rayExecLocal=os.path.join(os.getcwd(),"v2ray-core", os.name,"v2ray")
+SHARE_QUANTUMULT_QRCODE_PATH=os.path.join(os.getcwd(),"qrcode")
 TEST_PORT_BASE = 10080
 testFileUrl="http://cachefly.cachefly.net/10mb.test"
-# google_url = "https://www.google.com"
-google_url = "https://www.twitter.com"
+google_url = "https://www.google.com"
+# google_url = "https://www.twitter.com"
 exitFlag = 0
 
 class Manager(object):
@@ -152,13 +153,15 @@ class SpeedTest(object):
         self.p = subprocess.Popen([v2rayExecLocal,'-config',tmp])
     
     def start_download(self):
+        ret = False
         try:
-            time.sleep(5)
+            time.sleep(2)
             proxies = {"http": "http://127.0.0.1:%d"%self.listen_port}
             # requests.get(testFileUrl,proxies=proxies,stream=True)
-            resp = requests.get(google_url,proxies=proxies,stream=True)
+            resp = requests.get(google_url,proxies=proxies,stream=True,timeout=5)
             if resp.status_code == 200:
                 print ('[%s] OK!'%self.config['remark'])
+                ret = True
             else:
                 print ('[%s] Boo!'%self.config['remark'])
             # cmd = "curl -o /dev/null -s -w %{speed_download} -x socks5://127.0.0.1:%d %s"%(self.listen_port, testFileUrl)
@@ -169,6 +172,8 @@ class SpeedTest(object):
             output = b'0.000'
             print ('[%s] error [%s]!'%(self.config['remark'],e))
         output =0
+
+        return ret
         # print('%d : %d kb/s' %(self.listen_port, float(output) / 1000))
 
     def shutdown(self):
@@ -254,22 +259,26 @@ class myThread (threading.Thread):
         logger.debug("Exiting %d" % self.id)
 
 def do_test(id,config):
+    ret = False
     try:
         test = SpeedTest(config,id)
         test.run_v2ray()
-        test.start_download()
+        ret = test.start_download()
         test.shutdown()
     except Exception as e:
         logger.error(e)
+    return ret
 def process_data(id,work_queue):            
     while not exitFlag:
         queue_lock.acquire()
         # logger.debug("read %d"%id)
         if not work_queue.empty():
             # logger.debug("get queue %d"%id)
-            config = work_queue.get()            
+            node = work_queue.get()            
             queue_lock.release()
-            do_test(id,config)            
+            ret = do_test(id,node.formatConfig())
+            node.valid = ret
+            # node.valid = ret or True
         else:
             # logger.debug("empty queue %d"%id)
             queue_lock.release()
@@ -320,59 +329,83 @@ def start(mode):
     if not os.path.exists(subFilePath):
         open(subFilePath, 'w+')
 
-    subFile = open(subFilePath, 'r')
-    subLink = subFile.read().strip()
-    subFile.close()
+    links =[]
+    # subFile = open(subFilePath, 'r')
 
-    if not subLink:
-        logging.debug('您还没有输入订阅地址，请输入订阅地址。')
+    # try:
+    #     links = subFile.readlines()
+    #     print(type(links), links)
+    #     for line in links:
+    #         print(type(line), line)
+    # finally:
+    #     subFile.close()
+
+    # try:
+    with open(subFilePath, encoding='utf-8') as f:
+        strs = f.read()
+        obj = json.loads(strs)
+        logger.debug("jstring - %s "%strs)
+        for item in obj["subscribes"]:
+            if item["enabled"]:
+                links.append(item["url"])
+        f.close()
+    # except Exception as e:            
+    #     logger.error("read json %s:"%e)
+
+ 
+    logger.debug("\n开始从订阅地址中读取服务器节点… 如等待时间过久，请检查网络。\n")
+
+    serverListLink =[]
+    for j in links:
+        # 获取订阅信息
+        logger.debug("start get subscribe url = %s"%j)        
+        # logging.debug(urldata)
         try:
-            subLink = input('订阅地址：')
-        except KeyboardInterrupt:
-            exit()
-        subFile = open(subFilePath, 'w+')
-        subFile.write(subLink)
-        subFile.close()
-    else:
-        logging.debug('订阅地址：'+subLink)
-    logging.debug('如果您的订阅地址有误，请删除或编辑 '+subFilePath)
+            urldata = requests.get(j.replace("\n",""),proxies=proxies).text
+            servers = decode(urldata).splitlines(False)        
+            for i in range(len(servers)):
+                try:                
+                    if servers[i].startswith('ss://'):
+                    # ss node
+                        base64Str = servers[i].replace('ss://', '')
+                        base64Str = urllib.parse.unquote(base64Str)
+                        origin = decode(base64Str[0 : base64Str.index('#')])
+                        remark = base64Str[base64Str.index('#') + 1 :]
+                        security = origin[0 : origin.index(':')]
+                        password = origin[origin.index(':') + 1 : origin.index('@')]
+                        ipandport = origin[origin.index('@') + 1 : ]
+                        ip = ipandport[0: ipandport.index(':')]
+                        port = int(ipandport[ipandport.index(':') + 1:])
+                        logging.debug('【' + str(i) + '】' + remark)
+                        ssNode = Shadowsocks(ip, port, remark, security, password)
+                        serverListLink.append(ssNode)
+                    else:
+                        # vmess
+                        logger.debug("vmess link:[%s]"%servers[i])
+                        base64Str = servers[i].replace('vmess://', '')                
+                        jsonstr = decode(base64Str)
+                        logger.debug("vmess*%s"%jsonstr)
+                        serverNode = json.loads(jsonstr)
+                        logger.debug('【' + str(i) + '】' + serverNode['ps'])
+                        v2Node = V2ray(serverNode['add'], int(serverNode['port']), serverNode['ps'], 'auto', serverNode['id'], int(serverNode['aid']), serverNode['net'], serverNode['type'], serverNode['host'], serverNode['path'], serverNode['tls'])                
+                        
+                        serverListLink.append(v2Node)
+                        quantumult_url = v2Node.to_quantumult_url()
+                        logger.debug("quantumult_url *%s"%quantumult_url)
 
-    logging.debug("\n开始从订阅地址中读取服务器节点… 如等待时间过久，请检查网络。\n")
-
-    # 获取订阅信息
-    urldata = requests.get(subLink,proxies=proxies).text
-
-    # logging.debug(urldata)
-
-
-    serverListLink = decode(urldata).splitlines(False)
-    for i in range(len(serverListLink)):
-        try:
-            if serverListLink[i].startswith('ss://'):
-            # ss node
-                base64Str = serverListLink[i].replace('ss://', '')
-                base64Str = urllib.parse.unquote(base64Str)
-                origin = decode(base64Str[0 : base64Str.index('#')])
-                remark = base64Str[base64Str.index('#') + 1 :]
-                security = origin[0 : origin.index(':')]
-                password = origin[origin.index(':') + 1 : origin.index('@')]
-                ipandport = origin[origin.index('@') + 1 : ]
-                ip = ipandport[0: ipandport.index(':')]
-                port = int(ipandport[ipandport.index(':') + 1:])
-                logging.debug('【' + str(i) + '】' + remark)
-                ssNode = Shadowsocks(ip, port, remark, security, password)
-                serverListLink[i] = ssNode
-            else:
-                # vmess
-                base64Str = serverListLink[i].replace('vmess://', '')
-                jsonstr = decode(base64Str)
-                serverNode = json.loads(jsonstr)
-                logging.debug('【' + str(i) + '】' + serverNode['ps'])
-                v2Node = V2ray(serverNode['add'], int(serverNode['port']), serverNode['ps'], 'auto', serverNode['id'], int(serverNode['aid']), serverNode['net'], serverNode['type'], serverNode['host'], serverNode['path'], serverNode['tls'])
-                serverListLink[i] = v2Node
-        except BaseException:
-            logger.error("%d node error."%i)
-            pass
+                        vmess_qr = pyqrcode.create(quantumult_url, error='H')
+                        try:
+                            if not os.path.exists(SHARE_QUANTUMULT_QRCODE_PATH):
+                                os.makedirs(SHARE_QUANTUMULT_QRCODE_PATH)
+                            vmess_qr.png("{}\{}-{}.png".format(SHARE_QUANTUMULT_QRCODE_PATH, v2Node.remark, v2Node.uuid), scale=5)
+                        except Exception as e:
+                            logger.error('Unable to save file![%s]'%e)
+                except BaseException  as e:
+                    logger.error("%d node error.[%s]"%(i,e))
+                    pass
+        except Exception as e:
+            logger.error("get subscribe url fail:[%s]"%e)
+            continue  
 
 
     if mode == 'change_node':
@@ -398,31 +431,27 @@ def start(mode):
                 continue
             else:
                 break
-    elif mode == "speed_test":
-        
+    elif mode == "speed_test":        
         
         workQueue = queue.Queue(len(serverListLink))
         threads = []    
 
-                # logger.debug("start fill queue" )
+        # logger.debug("start fill queue" )
+        # 填充队列
         queue_lock.acquire()
         for i in range(len(serverListLink)):
              if isinstance(serverListLink[i],V2ray):
                 # logger.debug("put queue" )
-                workQueue.put(serverListLink[i].formatConfig())
+                workQueue.put(serverListLink[i])
+                # workQueue.put(serverListLink[i].formatConfig())
         queue_lock.release()
         # logger.debug("finish fill queue" )
-
+        
+        # 创建新线程
         for i in  range(10):
             thread = myThread(i,workQueue)
             thread.start()
             threads.append(thread)
-# 创建新线程
-        
-
-
-        
-      # 填充队列
 
         # 等待队列清空
         while not workQueue.empty():
@@ -435,6 +464,9 @@ def start(mode):
             t.finish()
             t.join()
 
+        for i in range(len(serverListLink)):
+            logger.debug("speed test result-[{}] - [{}].".format(serverListLink[i].remark,serverListLink[i].valid))
+        
         logger.debug("speed test done.")
 
         # copy config.json
