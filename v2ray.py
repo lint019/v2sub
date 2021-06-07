@@ -6,6 +6,8 @@ import base64
 import logging
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+
 class V2ray(Node):
     uuid = ''
     alterId = 0
@@ -17,6 +19,7 @@ class V2ray(Node):
 
     def __init__(self, ip, port, remark, security, uuid, alterId, network, camouflageType, camouflageHost, camouflagePath, camouflageTls):
         super(V2ray, self).__init__(ip, port, remark, security)
+        
         self.uuid = uuid
         self.alterId = alterId
         self.network = network
@@ -44,12 +47,16 @@ class V2ray(Node):
           },
           "inbounds": [
             {
+                "sniffing": {
+                    "enabled": True,
+                    "destOverride": [
+                    "tls",
+                    "http"
+                    ]
+               },
               "port": 1080,
-              "listen": "127.0.0.1",
+              "listen": "0.0.0.0",
               "protocol": "socks",
-              "settings": {
-                "udp": True
-              },
               "tag": "in"
             },
           ],
@@ -79,9 +86,12 @@ class V2ray(Node):
                   "outboundTag": "direct"
                 },
                 {
-                  "type":"field",
-                  "inboundTag":["in"],
-                  "outboundTag":"out"
+                "type": "field",
+                "outboundTag": "direct",
+                "domain": [
+                    "localhost",
+                    "geosite:cn"
+                ]
                 }
               ]
             }
@@ -106,7 +116,7 @@ class V2ray(Node):
                     "streamSettings": {
                         "network": "tcp"
                     },
-                    "tag": "out"
+                    "tag": "proxy"
                 })
             return v2rayConf
         elif self.network == 'kcp':
@@ -172,7 +182,7 @@ class V2ray(Node):
                             }
                         }
                     },
-                    "tag": "out"
+                    "tag": "proxy"
                 })
             return v2rayConf
         else:
@@ -204,7 +214,7 @@ class V2ray(Node):
                             ]
                         }
                     },
-                    "tag": "out"
+                    "tag": "proxy"
                 })
             return v2rayConf
 

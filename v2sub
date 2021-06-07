@@ -13,6 +13,7 @@ import subprocess
 import requests
 import logging
 import argparse
+import re
 
 import queue
 import threading
@@ -24,6 +25,10 @@ logger = logging.getLogger(__name__)
 from shadowsocks import Shadowsocks
 from v2ray import V2ray
 
+def validateTitle(title):
+    rstr = r"[\/\\\:\*\?\"\<\>\|]"  # '/ \ : * ? " < > |'
+    new_title = re.sub(rstr, "_", title)  # 替换为下划线
+    return new_title
 
 def decode(base64Str):
     base64Str = base64Str.replace('\n', '').replace('-', '+').replace('_', '/')
@@ -156,9 +161,10 @@ class SpeedTest(object):
         ret = False
         try:
             time.sleep(2)
-            proxies = {"http": "http://127.0.0.1:%d"%self.listen_port}
+            proxies = {"http": "127.0.0.1:%d"%self.listen_port,"https": "127.0.0.1:%d"%self.listen_port}
+            print("used : http://127.0.0.1:%d"%self.listen_port)
             # requests.get(testFileUrl,proxies=proxies,stream=True)
-            resp = requests.get(google_url,proxies=proxies,stream=True,timeout=5)
+            resp = requests.get(google_url,proxies=proxies,timeout=5)
             if resp.status_code == 200:
                 print ('[%s] OK!'%self.config['remark'])
                 ret = True
@@ -387,6 +393,7 @@ def start(mode):
                         logger.debug("vmess*%s"%jsonstr)
                         serverNode = json.loads(jsonstr)
                         logger.debug('【' + str(i) + '】' + serverNode['ps'])
+                                               
                         v2Node = V2ray(serverNode['add'], int(serverNode['port']), serverNode['ps'], 'auto', serverNode['id'], int(serverNode['aid']), serverNode['net'], serverNode['type'], serverNode['host'], serverNode['path'], serverNode['tls'])                
                         
                         serverListLink.append(v2Node)
@@ -397,7 +404,10 @@ def start(mode):
                         try:
                             if not os.path.exists(SHARE_QUANTUMULT_QRCODE_PATH):
                                 os.makedirs(SHARE_QUANTUMULT_QRCODE_PATH)
-                            vmess_qr.png("{}\{}-{}.png".format(SHARE_QUANTUMULT_QRCODE_PATH, v2Node.remark, v2Node.uuid), scale=5)
+                            name = validateTitle(v2Node.remark)    
+                            str_path = "{}\{}-{}.png".format(SHARE_QUANTUMULT_QRCODE_PATH, name, v2Node.uuid)
+                            # str_path = validateTitle(str_path)
+                            vmess_qr.png( str_path, scale=5)
                         except Exception as e:
                             logger.error('Unable to save file![%s]'%e)
                 except BaseException  as e:
@@ -465,9 +475,9 @@ def start(mode):
             t.join()
 
         for i in range(len(serverListLink)):
-            logger.debug("speed test result-[{}] - [{}].".format(serverListLink[i].remark,serverListLink[i].valid))
+            print("speed test result-[{}] - [{}].".format(serverListLink[i].remark,serverListLink[i].valid))
         
-        logger.debug("speed test done.")
+        print("speed test done.")
 
         # copy config.json
         
