@@ -2,8 +2,10 @@
 # -*- coding: UTF-8 -*-
 
 from node import Node
-
-
+import base64
+import logging
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 class V2ray(Node):
     uuid = ''
     alterId = 0
@@ -22,6 +24,15 @@ class V2ray(Node):
         self.camouflagePath = camouflagePath
         self.camouflageTls = camouflageTls
         self.camouflageType = camouflageType
+        self._valid = False
+
+    @property
+    def valid(self):
+        return self._valid
+
+    @valid.setter
+    def valid(self, value):
+        self._valid = value
 
     def formatConfig(self):
         v2rayConf = {
@@ -196,4 +207,38 @@ class V2ray(Node):
                     "tag": "out"
                 })
             return v2rayConf
-1
+
+    def to_quantumult_url(self):
+        tls = self.camouflageTls=="tls"
+        ps = self.remark
+        _type=self.camouflageType
+        host = self.camouflageHost
+        uuid = self.uuid
+        port = self.port
+        add = self.ip
+        net = self.network
+        path = self.camouflagePath
+        str2=""
+        if net=="http" or net=="ws":
+            str2 = ',obfs={},obfs-path="{}"obfs-header="Host:{}"'.format(net,path,host)
+        str1 = '{} = vmess,{},{},{},"{}",over-tls={},tls-host={},certificate=1'.format(ps,add,port,_type,uuid,tls,host)
+        info = str1+str2
+        logger.debug("to_quantumult_url_origin -- %s"%info)
+        vmess_info = 'vmess://{}'.format(base64.b64encode(info.encode('utf8')).decode('utf8'))
+        logger.debug("to_quantumult_url -- %s"%vmess_info)
+        return vmess_info
+
+    def  to_vmess_url(self,uuid, server, port, cipher, obfs, ws_path, tls, client_type):
+        if client_type == 'shadowrocket':
+            vmess_info = '{}:{}@{}:{}'.format(cipher,uuid,server,port)
+            vmess_info_b64 = base64.b64encode(vmess_info.encode('ascii')).decode('ascii').replace('=','')
+            return 'vmess://{}?path={}&obfs={}&tls={}'.format(vmess_info_b64,ws_path,obfs,tls)
+        elif client_type == 'bifrost':
+            ws_path = "%3D{}".format(ws_path.replace('/','%252F'))
+            vmess_info = 'bfv://{}:{}/vmess/1?rtype=lanchinacnsite&dns=8.8.8.8&tnet=ws&tsec=tls&ttlssn={}&mux=0&uid={}&aid=64&sec=auto&ws=path{}%26headers%3D#{}'.format(server, port, server, uuid, ws_path, server)
+            
+            print(vmess_info)
+            print(ws_path)            
+            return vmess_info
+        else:
+            raise NameError('Unknown type')
