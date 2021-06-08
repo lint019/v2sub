@@ -11,6 +11,15 @@ class Shadowsocks(Node):
      def __init__(self, ip, port, remark, security, password):
         super(Shadowsocks, self).__init__(ip, port, remark, security)
         self.password = password
+        self._valid =False
+
+     @property
+     def valid(self):
+           return self._valid
+
+     @valid.setter
+     def valid(self, value):
+          self._valid = value
 
      def formatConfig(self) :
          ssConfig = {

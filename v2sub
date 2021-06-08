@@ -152,19 +152,32 @@ class SpeedTest(object):
         tmp = os.path.join(os.getcwd(),"v2ray-core",os.name, "config_%d.json"%self.listen_port)
         self.config['inbounds'][0]['port']= self.listen_port
         self.config['inbounds'][0]['protocol']= "http"
+        self.config['log']['access']= os.path.join(os.getcwd(),"v2ray-core",os.name, "log/access.log")
+        self.config['log']['error']= os.path.join(os.getcwd(),"v2ray-core",os.name, "log/err.log")
+
         logger.debug(json.dumps(self.config))
         json.dump(self.config, open(tmp, 'w'), indent=2)
         logger.debug("run test: %s %s"%(v2rayExecLocal,tmp))
         self.p = subprocess.Popen([v2rayExecLocal,'-config',tmp])
+        # output, unused_err = self.p.communicate()
+        output = ""
+        count = 5
+        while output.find('started') < 0 and count >0:
+            logger.debug(output)
+            count = count -1
+            time.sleep(1)
+
     
     def start_download(self):
         ret = False
         try:
-            time.sleep(2)
+            while self.p.poll()==0:
+                logger.debug("wait a sec.")
+                time.sleep(1)
             proxies = {"http": "127.0.0.1:%d"%self.listen_port,"https": "127.0.0.1:%d"%self.listen_port}
             print("used : http://127.0.0.1:%d"%self.listen_port)
             # requests.get(testFileUrl,proxies=proxies,stream=True)
-            resp = requests.get(google_url,proxies=proxies,timeout=5)
+            resp = requests.get(google_url,proxies=proxies,timeout=15)
             if resp.status_code == 200:
                 print ('[%s] OK!'%self.config['remark'])
                 ret = True
@@ -185,6 +198,8 @@ class SpeedTest(object):
     def shutdown(self):
         if self.p !=0:
             self.p.terminate()
+            self.p.wait()
+            logger.debug("has terminated.")
         
     
 
@@ -295,7 +310,7 @@ def process_data(id,work_queue):
     
 
 
-def start(mode):
+def start(args):
     # mode = 'changeNode'
     # v2rayConfigLocal='/etc/v2ray/config.json'
     
@@ -353,7 +368,7 @@ def start(mode):
         logger.debug("jstring - %s "%strs)
         for item in obj["subscribes"]:
             if item["enabled"]:
-                links.append(item["url"])
+                links.append(item)
         f.close()
     # except Exception as e:            
     #     logger.error("read json %s:"%e)
@@ -362,12 +377,21 @@ def start(mode):
     logger.debug("\n开始从订阅地址中读取服务器节点… 如等待时间过久，请检查网络。\n")
 
     serverListLink =[]
-    for j in links:
+    for j in obj["subscribes"]:
+        if not j["enabled"]:
+            continue
         # 获取订阅信息
-        logger.debug("start get subscribe url = %s"%j)        
+        logger.debug("start get subscribe url = %s"%j['url'])        
         # logging.debug(urldata)
         try:
-            urldata = requests.get(j.replace("\n",""),proxies=proxies).text
+            if args.update or 'md5' not in j :
+                urldata = requests.get(j['url'].replace("\n",""),proxies=proxies).text
+                j['md5']=urldata
+                # json.dumps(subFilePath,links)
+                json.dump(obj, open(subFilePath, mode='w',encoding='utf-8'),indent=2)
+                logger.debug("update subscribe url = %s"%j['url'])
+            else:
+                urldata=j["md5"]
             servers = decode(urldata).splitlines(False)        
             for i in range(len(servers)):
                 try:                
@@ -418,7 +442,7 @@ def start(mode):
             continue  
 
 
-    if mode == 'change_node':
+    if args.mode == 'change_node':
         while True:
             try:
                 for i in range(len(serverListLink)):
@@ -441,7 +465,7 @@ def start(mode):
                 continue
             else:
                 break
-    elif mode == "speed_test":        
+    elif args.mode == "speed_test":        
         
         workQueue = queue.Queue(len(serverListLink))
         threads = []    
@@ -458,7 +482,7 @@ def start(mode):
         # logger.debug("finish fill queue" )
         
         # 创建新线程
-        for i in  range(10):
+        for i in  range(int(args.threads)):
             thread = myThread(i,workQueue)
             thread.start()
             threads.append(thread)
@@ -505,10 +529,12 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="多媒体http服务",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-m','--mode', help="change_node | speed_test", default='change_node')    
+    parser.add_argument('-m','--mode', help="change_node | speed_test", default='change_node')
+    parser.add_argument("-u", "--update", help="update subscribe", action='store_true')
+    parser.add_argument("-t", "--threads", help="speed test threads", default=1)
     parser.add_argument("-v", "--verbose", help="Verbose logging", action='store_true')
     args = parser.parse_args()
     if args.verbose:
             logging.getLogger().setLevel(logging.DEBUG)
 
-    start(args.mode)
+    start(args)

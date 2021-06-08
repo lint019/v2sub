@@ -41,9 +41,9 @@ class V2ray(Node):
         v2rayConf = {
           "remark":self.remark,
           "log" : {
-              "access" : "./log/v2ray/access.log",
-              "error":"./log/v2ray/error.log",
-              "logLevel": "none"
+              "access" : "./log/access.log",
+              "error":"./log/error.log",
+              "logLevel": "verbose"
           },
           "inbounds": [
             {
@@ -61,16 +61,7 @@ class V2ray(Node):
             },
           ],
           "outbounds": [
-            {
-              "settings" : {},
-              "protocol":"freedom",
-              "tag" : "direct"
-            },
-            {
-                "settings" : {},
-                "protocol":"blackhole",
-                "tag" : "blocked"
-            }
+ 
           ],
           "routing": {
             "strategy": "rules",
@@ -83,11 +74,11 @@ class V2ray(Node):
                     "geoip:cn",
                     "geoip:private"
                   ],
-                  "outboundTag": "direct"
+                  "outboundTag": "proxy"
                 },
                 {
                 "type": "field",
-                "outboundTag": "direct",
+                "outboundTag": "proxy",
                 "domain": [
                     "localhost",
                     "geosite:cn"
