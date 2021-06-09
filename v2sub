@@ -112,10 +112,34 @@ v2rayConfigLocal=os.path.join(os.getcwd(),"v2ray-core",os.name, "config.json")
 v2rayExecLocal=os.path.join(os.getcwd(),"v2ray-core", os.name,"v2ray")
 SHARE_QUANTUMULT_QRCODE_PATH=os.path.join(os.getcwd(),"qrcode")
 TEST_PORT_BASE = 10080
+SERVER_PORT = 10800
+
 testFileUrl="http://cachefly.cachefly.net/10mb.test"
-google_url = "https://www.google.com"
+google_url = "https://www.github.com"
+# google_url = "https://www.google.com"
 # google_url = "https://www.twitter.com"
 exitFlag = 0
+
+
+def test_connect(name,port):
+    ret = False
+    try:
+        # proxies = { "http": "http://linyaoji:fuckyou-321@10.255.251.141:8080", "https": "http://linyaoji:fuckyou-321@10.255.251.141:8080"}    
+        proxies = {"http": "http://127.0.0.1:%d"%port,"https": "http://127.0.0.1:%d"%port,"socks5": "http://127.0.0.1:%d"%port}
+        print("start connect [%s] used :[%s] node,proxy:[http://127.0.0.1:%d] "%(google_url,name,port))
+        # resp = requests.get(google_url,stream=True)
+        resp = requests.get(google_url,proxies=proxies,timeout=5)
+        if resp.status_code == 200:
+            print ('[%s] OK!'%name)
+            ret = True        
+        else:
+            print('[%s] Boo!'%name)
+    except KeyboardInterrupt:
+        pass
+    except Exception as e:
+        print ('[%s] error [%s]!'%(name,e))
+    
+    return ret
 
 class Manager(object):
     def __init__(self,cmd,args):
@@ -127,7 +151,7 @@ class Manager(object):
         self.stop()
 
         logger.debug("create cmd %s"%self.cmd)
-        self.p = subprocess.Popen([self.cmd,self.args])
+        self.p = subprocess.Popen([self.cmd,"-config",self.args])
         # self.p = subprocess.Popen(self.cmd,shell=True,stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         time.sleep(3)
         if self.p.poll() is not None:
@@ -149,11 +173,15 @@ class SpeedTest(object):
     def run_v2ray(self):
 
         # logger.debug(json.dumps(self.config))
+   
         tmp = os.path.join(os.getcwd(),"v2ray-core",os.name, "config_%d.json"%self.listen_port)
         self.config['inbounds'][0]['port']= self.listen_port
         self.config['inbounds'][0]['protocol']= "http"
         self.config['log']['access']= os.path.join(os.getcwd(),"v2ray-core",os.name, "log/access.log")
         self.config['log']['error']= os.path.join(os.getcwd(),"v2ray-core",os.name, "log/err.log")
+        log_path =os.path.join(os.getcwd(),"v2ray-core",os.name,"log")
+        if not os.path.exists(log_path):
+            os.makedirs(log_path)
 
         logger.debug(json.dumps(self.config))
         json.dump(self.config, open(tmp, 'w'), indent=2)
@@ -170,27 +198,11 @@ class SpeedTest(object):
     
     def start_download(self):
         ret = False
-        try:
-            while self.p.poll()==0:
-                logger.debug("wait a sec.")
-                time.sleep(1)
-            proxies = {"http": "127.0.0.1:%d"%self.listen_port,"https": "127.0.0.1:%d"%self.listen_port}
-            print("used : http://127.0.0.1:%d"%self.listen_port)
-            # requests.get(testFileUrl,proxies=proxies,stream=True)
-            resp = requests.get(google_url,proxies=proxies,timeout=15)
-            if resp.status_code == 200:
-                print ('[%s] OK!'%self.config['remark'])
-                ret = True
-            else:
-                print ('[%s] Boo!'%self.config['remark'])
-            # cmd = "curl -o /dev/null -s -w %{speed_download} -x socks5://127.0.0.1:%d %s"%(self.listen_port, testFileUrl)
-            # output = subprocess.check_output(cmd, shell=True)
-        except KeyboardInterrupt:
-            pass
-        except Exception as e:
-            output = b'0.000'
-            print ('[%s] error [%s]!'%(self.config['remark'],e))
-        output =0
+        while self.p.poll()==0:
+            logger.debug("wait a sec.")
+            time.sleep(1)
+
+        ret = test_connect(self.config['remark'],self.listen_port)
 
         return ret
         # print('%d : %d kb/s' %(self.listen_port, float(output) / 1000))
@@ -266,6 +278,7 @@ class myThread (threading.Thread):
     def run(self):
         logger.debug("Starting %d"%self.id)
         process_data(self.id,self.work_queue)   
+
         # while not self.exit:
         #     queue_lock.acquire()
         #     # logger.debug("read %d"%id)
@@ -297,8 +310,11 @@ def process_data(id,work_queue):
             # logger.debug("get queue %d"%id)
             node = work_queue.get()            
             queue_lock.release()
+            print("")
+            print("[%d]-########################################################################"%id)
             ret = do_test(id,node.formatConfig())
             node.valid = ret
+            print("")
             # node.valid = ret or True
         else:
             # logger.debug("empty queue %d"%id)
@@ -306,8 +322,6 @@ def process_data(id,work_queue):
             break
             
         # time.sleep(3)
-
-    
 
 
 def start(args):
@@ -320,7 +334,7 @@ def start(args):
     proxies={}
     # cmd = "%s %s "%(v2rayExecLocal,v2rayConfigLocal)
     # exec = Manager(cmd,"")
-    exec = Manager(v2rayExecLocal,v2rayConfigLocal)
+    
     if len(sys.argv) == 2:
         mode = sys.argv[1]
     if os.name == 'linux':
@@ -453,13 +467,17 @@ def start(args):
                 break
             except BaseException:
                 continue
-            ping_node(serverListLink[i].ip)
+            # ping_node(serverListLink[i].ip)
+            ret = test_connect(serverListLink[i].remark,SERVER_PORT)            
             inputStr = input('确定要使用该节点吗？[y/n/exit]  ')
             if inputStr == 'y':
                 jsonObj = serverListLink[setServerNodeId].formatConfig()
                 # jsonObj = askfollowRedirect(jsonObj)
+                backup_config()
                 json.dump(jsonObj, open(v2rayConfigLocal, 'w'), indent=2)
-                change_node(jsonObj,exec)
+                exec = Manager(v2rayExecLocal,v2rayConfigLocal)
+                restart_v2ray(exec)
+                
                 exit()
             elif inputStr == 'n':
                 continue
@@ -497,7 +515,7 @@ def start(args):
         for t in threads:
             t.finish()
             t.join()
-
+        print("**************************************************************************")
         for i in range(len(serverListLink)):
             print("speed test result-[{}] - [{}].".format(serverListLink[i].remark,serverListLink[i].valid))
         
