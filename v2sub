@@ -215,6 +215,21 @@ class SpeedTest(object):
         
     
 
+def make_qrcode_png(v2Node):
+    quantumult_url = v2Node.to_quantumult_url()
+    logger.debug("quantumult_url *%s"%quantumult_url)
+
+    vmess_qr = pyqrcode.create(quantumult_url, error='H')
+    try:
+        if not os.path.exists(SHARE_QUANTUMULT_QRCODE_PATH):
+            os.makedirs(SHARE_QUANTUMULT_QRCODE_PATH)
+        name = validateTitle(v2Node.remark)    
+        str_path = "{}/{}-{}.png".format(SHARE_QUANTUMULT_QRCODE_PATH, name, v2Node.uuid)
+        # str_path = validateTitle(str_path)
+        vmess_qr.png( str_path, scale=5)
+    except Exception as e:
+        logger.error('Unable to save file![%s]'%e)
+
 def ping_node(ip):
     if os.name == 'linux':
         subprocess.call('ping ' + ip + ' -c 3 -w 10', shell=True)
@@ -435,19 +450,7 @@ def start(args):
                         v2Node = V2ray(serverNode['add'], int(serverNode['port']), serverNode['ps'], 'auto', serverNode['id'], int(serverNode['aid']), serverNode['net'], serverNode['type'], serverNode['host'], serverNode['path'], serverNode['tls'])                
                         
                         serverListLink.append(v2Node)
-                        quantumult_url = v2Node.to_quantumult_url()
-                        logger.debug("quantumult_url *%s"%quantumult_url)
-
-                        vmess_qr = pyqrcode.create(quantumult_url, error='H')
-                        try:
-                            if not os.path.exists(SHARE_QUANTUMULT_QRCODE_PATH):
-                                os.makedirs(SHARE_QUANTUMULT_QRCODE_PATH)
-                            name = validateTitle(v2Node.remark)    
-                            str_path = "{}\{}-{}.png".format(SHARE_QUANTUMULT_QRCODE_PATH, name, v2Node.uuid)
-                            # str_path = validateTitle(str_path)
-                            vmess_qr.png( str_path, scale=5)
-                        except Exception as e:
-                            logger.error('Unable to save file![%s]'%e)
+                        
                 except BaseException  as e:
                     logger.error("%d node error.[%s]"%(i,e))
                     pass
@@ -517,7 +520,9 @@ def start(args):
             t.join()
         print("**************************************************************************")
         for i in range(len(serverListLink)):
-            print("speed test result-[{}] - [{}].".format(serverListLink[i].remark,serverListLink[i].valid))
+            if serverListLink[i].valid:
+                print("speed test result-[{}] - [{}].".format(serverListLink[i].remark,serverListLink[i].valid))
+                make_qrcode_png(serverListLink[i])
         
         print("speed test done.")
 
