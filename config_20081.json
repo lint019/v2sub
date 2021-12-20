@@ -1,0 +1,6739 @@
+{
+  "root_dir": "D:\\OneDrive - Faurecia\\scripts\\v2sub-master",
+  "remark": "https://github.com/YoulianBoshi_0",
+  "log": {
+    "access": "D:\\OneDrive - Faurecia\\scripts\\v2sub-master\\log/access_20081.log",
+    "error": "D:\\OneDrive - Faurecia\\scripts\\v2sub-master\\log/err_20081.log",
+    "logLevel": "Verbose"
+  },
+  "inbounds": [
+    {
+      "sniffing": {
+        "enabled": true,
+        "destOverride": [
+          "tls",
+          "http"
+        ]
+      },
+      "port": 20081,
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "tag": "c52e27cd-9c9c-44a2-9371-125b1ea8953c"
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "127.0.0.1",
+            "port": 80,
+            "users": [
+              {
+                "id": "c52e27cd-9c9c-44a2-9371-125b1ea8953c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "httpSettings": {
+          "path": "",
+          "host": [
+            ""
+          ]
+        }
+      },
+      "tag": "c52e27cd-9c9c-44a2-9371-125b1ea8953c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "127.0.0.1",
+            "port": 80,
+            "users": [
+              {
+                "id": "c52e27cd-9c9c-44a2-9371-125b1ea8953c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "httpSettings": {
+          "path": "",
+          "host": [
+            ""
+          ]
+        }
+      },
+      "tag": "c52e27cd-9c9c-44a2-9371-125b1ea8953c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "fr.sangyu.tw",
+            "port": 443,
+            "users": [
+              {
+                "id": "ce14d788-0f79-491e-85ca-05240612f28a",
+                "alterId": 233
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "fr.sangyu.tw"
+          }
+        }
+      },
+      "tag": "ce14d788-0f79-491e-85ca-05240612f28a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a.v2ray.world",
+            "port": 443,
+            "users": [
+              {
+                "id": "05b6b25b-bb5d-4dcd-9710-31e374ffa584",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "httpSettings": {
+          "path": "/fgq",
+          "host": [
+            ""
+          ]
+        }
+      },
+      "tag": "05b6b25b-bb5d-4dcd-9710-31e374ffa584"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "mike.fuckwan73.ml",
+            "port": 443,
+            "users": [
+              {
+                "id": "8c793b65-9d27-4a74-b952-7c679dac3391",
+                "alterId": 233
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/163",
+          "headers": {
+            "Host": "mike.fuckwan73.ml"
+          }
+        }
+      },
+      "tag": "8c793b65-9d27-4a74-b952-7c679dac3391"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "91.203.192.131",
+            "port": 49856,
+            "users": [
+              {
+                "id": "cf79d0ab-7c88-46cc-b5e6-1fd713b0b423",
+                "alterId": 16
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "kcp",
+        "kcpSettings": {
+          "mtu": 1350,
+          "tti": 50,
+          "uplinkCapacity": 12,
+          "downlinkCapacity": 100,
+          "congestion": false,
+          "readBufferSize": 2,
+          "writeBufferSize": 2,
+          "header": {
+            "type": "srtp"
+          }
+        }
+      },
+      "tag": "cf79d0ab-7c88-46cc-b5e6-1fd713b0b423"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "51.15.119.36",
+            "port": 443,
+            "users": [
+              {
+                "id": "05b6b25b-bb5d-4dcd-9710-31e374ffa584",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "httpSettings": {
+          "path": "/fgq",
+          "host": [
+            ""
+          ]
+        }
+      },
+      "tag": "05b6b25b-bb5d-4dcd-9710-31e374ffa584"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ngzyd-1.okex-tradebot.xyz",
+            "port": 30000,
+            "users": [
+              {
+                "id": "9140c163-8072-486c-b735-b3f8b1b96321",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "9140c163-8072-486c-b735-b3f8b1b96321"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ngzyd-1.okex-tradebot.xyz",
+            "port": 30006,
+            "users": [
+              {
+                "id": "9140c163-8072-486c-b735-b3f8b1b96321",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "9140c163-8072-486c-b735-b3f8b1b96321"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ngzyd-1.okex-tradebot.xyz",
+            "port": 30014,
+            "users": [
+              {
+                "id": "9140c163-8072-486c-b735-b3f8b1b96321",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "9140c163-8072-486c-b735-b3f8b1b96321"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ngzyd-1.okex-tradebot.xyz",
+            "port": 30004,
+            "users": [
+              {
+                "id": "9140c163-8072-486c-b735-b3f8b1b96321",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "9140c163-8072-486c-b735-b3f8b1b96321"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ngzyd-1.okex-tradebot.xyz",
+            "port": 30012,
+            "users": [
+              {
+                "id": "9140c163-8072-486c-b735-b3f8b1b96321",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "9140c163-8072-486c-b735-b3f8b1b96321"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ngzyd-1.okex-tradebot.xyz",
+            "port": 30008,
+            "users": [
+              {
+                "id": "9140c163-8072-486c-b735-b3f8b1b96321",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "9140c163-8072-486c-b735-b3f8b1b96321"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "140.179.85.93",
+            "port": 20802,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "140.179.85.93",
+            "port": 20803,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "140.179.85.93",
+            "port": 20804,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "140.179.85.93",
+            "port": 20805,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "001.hk.ap.pop.smallairport.net",
+            "port": 22356,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "003.hk.ap.pop.smallairport.net",
+            "port": 22356,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "001.sg.ap.pop.smallairport.net",
+            "port": 22356,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "twn04.ip4.ddns.acg.photos",
+            "port": 80,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "001.us.na.pop.smallairport.net",
+            "port": 22356,
+            "users": [
+              {
+                "id": "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "b30e3ee3-0353-4df4-a7cc-8613d0138106"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "43.155.75.170",
+            "port": 80,
+            "users": [
+              {
+                "id": "76329684-c5d2-4cf7-fcf5-06ad79a6aab3",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "www.microsoft.com"
+          }
+        }
+      },
+      "tag": "76329684-c5d2-4cf7-fcf5-06ad79a6aab3"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30057,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 60038,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30041,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "server1.sh-cu.exacc.need.sh",
+            "port": 58190,
+            "users": [
+              {
+                "id": "3f15492a-54a6-4eda-846b-bdfb049b0a27",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/Y77A2IHP",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "3f15492a-54a6-4eda-846b-bdfb049b0a27"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "031.ap.pop.bigairport.net",
+            "port": 12356,
+            "users": [
+              {
+                "id": "f944883a-a9fb-4ee8-b08b-aaf920f4c393",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "f944883a-a9fb-4ee8-b08b-aaf920f4c393"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "032.ap.pop.bigairport.net",
+            "port": 12356,
+            "users": [
+              {
+                "id": "f944883a-a9fb-4ee8-b08b-aaf920f4c393",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "f944883a-a9fb-4ee8-b08b-aaf920f4c393"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "156.234.95.72",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "xe3rayu3.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xe3rayu3.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "xe3rayu3.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "3.112.226.100",
+            "port": 12356,
+            "users": [
+              {
+                "id": "c269d32f-56e3-4cc9-9029-df1c1d41809b",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "c269d32f-56e3-4cc9-9029-df1c1d41809b"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.hd.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "028.ap.pop.bigairport.net",
+            "port": 12356,
+            "users": [
+              {
+                "id": "f944883a-a9fb-4ee8-b08b-aaf920f4c393",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "f944883a-a9fb-4ee8-b08b-aaf920f4c393"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "jp03-vm0.ikuuu.casa",
+            "port": 449,
+            "users": [
+              {
+                "id": "8581d15e-ae94-3fda-9de5-e8dff1c05e23",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/hls/cctv5phd.m3u8",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "8581d15e-ae94-3fda-9de5-e8dff1c05e23"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "jp03-vm0.ikuuu.casa",
+            "port": 448,
+            "users": [
+              {
+                "id": "3c7919b0-87bd-3399-abd2-a79cd334c0c2",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/hls/cctv5phd.m3u8",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "3c7919b0-87bd-3399-abd2-a79cd334c0c2"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "tk.shcn2.tkddns.xyz",
+            "port": 22642,
+            "users": [
+              {
+                "id": "98e96c9f-4bb3-39d4-9a2c-fac04257f7c7",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "zxjp-b.tkong.cc"
+          }
+        }
+      },
+      "tag": "98e96c9f-4bb3-39d4-9a2c-fac04257f7c7"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "103.138.75.235",
+            "port": 443,
+            "users": [
+              {
+                "id": "8ccc3052-4941-47e4-b85f-a67ea71e3fe6",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/clientarea",
+          "headers": {
+            "Host": "103.138.75.235"
+          }
+        }
+      },
+      "tag": "8ccc3052-4941-47e4-b85f-a67ea71e3fe6"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "18.163.124.254",
+            "port": 80,
+            "users": [
+              {
+                "id": "c269d32f-56e3-4cc9-9029-df1c1d41809b",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "c269d32f-56e3-4cc9-9029-df1c1d41809b"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.t1.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.cw.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.td.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.ds.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.t2.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.ra.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.hf.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.re.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.re.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "rx.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.md.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "172.104.98.216",
+            "port": 80,
+            "users": [
+              {
+                "id": "e5af0cad-295c-37b2-b601-f35d13f6b1bb",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "www.gov.hk"
+          }
+        }
+      },
+      "tag": "e5af0cad-295c-37b2-b601-f35d13f6b1bb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.ha.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.t2.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "test.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.ra.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "rx.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.mf.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.rd.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "rx.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.t3.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "hk.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.ma.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.ps.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.mi.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.hf.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "api.icloud.com"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.os.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.t1.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "trump.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.ha.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "api.apple.com"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.mc.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.rc.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.hc.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "api.skype.com"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.rb.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "rx.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.rf.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.nx.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.mh.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.hb.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.he.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "stmp.163.com"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.me.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.rc.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "rx.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.hc.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.t3.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.th.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.rb.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.tt.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.rd.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.ts.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.mb.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.hd.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "api.apple.com"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.he.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.rf.gladns.com",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "rx.moss.network"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "a83679f.mg.cloudflare.systems",
+            "port": 80,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/t",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "d0a8692.hb.gladns.com",
+            "port": 3306,
+            "users": [
+              {
+                "id": "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/s/d0a8692.fm.apple.com:32667",
+          "headers": {
+            "Host": "api.qq.com"
+          }
+        }
+      },
+      "tag": "57e0cb4d-eae5-48ec-8091-149dc2b309e0"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "45.142.158.200",
+            "port": 44213,
+            "users": [
+              {
+                "id": "c514da5d-c7f9-4e9a-fd56-6cbf7a3c0542",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "c514da5d-c7f9-4e9a-fd56-6cbf7a3c0542"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "gcp.tw.turbocdn.site",
+            "port": 36989,
+            "users": [
+              {
+                "id": "cad27f94-36c5-4038-884d-7551a92510c3",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/LQmpvACKu029cv3xne9b5jiMC63VHHoAKMZsbisLCrDdubclUMSSckC2gmJoIpy7?ed=2048",
+          "headers": {
+            "Host": "shoutingtoutiao3.10010.com"
+          }
+        }
+      },
+      "tag": "cad27f94-36c5-4038-884d-7551a92510c3"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "43.155.75.170",
+            "port": 80,
+            "users": [
+              {
+                "id": "76329684-c5d2-4cf7-fcf5-06ad79a6aab3",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "www.microsoft.com"
+          }
+        }
+      },
+      "tag": "76329684-c5d2-4cf7-fcf5-06ad79a6aab3"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "8.210.55.79",
+            "port": 80,
+            "users": [
+              {
+                "id": "d064d11b-477c-4c5d-a2d8-9fd599ef8e79",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "8.210.55.79"
+          }
+        }
+      },
+      "tag": "d064d11b-477c-4c5d-a2d8-9fd599ef8e79"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "jp03-vm0.ikuuu.casa",
+            "port": 448,
+            "users": [
+              {
+                "id": "3c7919b0-87bd-3399-abd2-a79cd334c0c2",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/hls/cctv5phd.m3u8",
+          "headers": {
+            "Host": "jp03-vm0.ikuuu.casa"
+          }
+        }
+      },
+      "tag": "3c7919b0-87bd-3399-abd2-a79cd334c0c2"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "kr2.futi.online",
+            "port": 2053,
+            "users": [
+              {
+                "id": "fec5fd62-56e7-431a-99b3-c1f76c5cbe8d",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "kr2.futi.online"
+          }
+        }
+      },
+      "tag": "fec5fd62-56e7-431a-99b3-c1f76c5cbe8d"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "kr3.futi.online",
+            "port": 2053,
+            "users": [
+              {
+                "id": "fec5fd62-56e7-431a-99b3-c1f76c5cbe8d",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "kr3.futi.online"
+          }
+        }
+      },
+      "tag": "fec5fd62-56e7-431a-99b3-c1f76c5cbe8d"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "43.155.75.170",
+            "port": 80,
+            "users": [
+              {
+                "id": "76329684-c5d2-4cf7-fcf5-06ad79a6aab3",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "43.155.75.170"
+          }
+        }
+      },
+      "tag": "76329684-c5d2-4cf7-fcf5-06ad79a6aab3"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "192.3.127.109",
+            "port": 8888,
+            "users": [
+              {
+                "id": "d064d11b-477c-4c5d-a2d8-9fd599ef8e79",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "192.3.127.109"
+          }
+        }
+      },
+      "tag": "d064d11b-477c-4c5d-a2d8-9fd599ef8e79"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "172.104.98.216",
+            "port": 80,
+            "users": [
+              {
+                "id": "e5af0cad-295c-37b2-b601-f35d13f6b1bb",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "www.gov.hk"
+          }
+        }
+      },
+      "tag": "e5af0cad-295c-37b2-b601-f35d13f6b1bb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "172.104.98.216",
+            "port": 80,
+            "users": [
+              {
+                "id": "e5af0cad-295c-37b2-b601-f35d13f6b1bb",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "172.104.98.216"
+          }
+        }
+      },
+      "tag": "e5af0cad-295c-37b2-b601-f35d13f6b1bb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "us1nhg-node.aiqiche123.com",
+            "port": 13723,
+            "users": [
+              {
+                "id": "a90597c1-bab3-4217-ad6f-0838675c8634",
+                "alterId": 10
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "a90597c1-bab3-4217-ad6f-0838675c8634"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "20.205.63.211",
+            "port": 10156,
+            "users": [
+              {
+                "id": "d6a85728-37ef-38bf-8c0d-801f0c5044ee",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "d6a85728-37ef-38bf-8c0d-801f0c5044ee"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "20.205.63.211",
+            "port": 62274,
+            "users": [
+              {
+                "id": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": "20.205.63.211"
+          }
+        }
+      },
+      "tag": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "20.205.63.211",
+            "port": 46101,
+            "users": [
+              {
+                "id": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "20.205.63.211",
+            "port": 14718,
+            "users": [
+              {
+                "id": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "20.205.63.211",
+            "port": 14083,
+            "users": [
+              {
+                "id": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "20.205.63.211",
+            "port": 33893,
+            "users": [
+              {
+                "id": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "20.205.63.211",
+            "port": 33893,
+            "users": [
+              {
+                "id": "d6a85728-37ef-38bf-8c0d-801f0c5044ee",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": "t.me/vpnhat"
+          }
+        }
+      },
+      "tag": "d6a85728-37ef-38bf-8c0d-801f0c5044ee"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cm-jm.okvpn.xyz",
+            "port": 20004,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cm-jm.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "shai7ein.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "shai7ein.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cm-jm.okvpn.xyz",
+            "port": 20006,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cm-jm.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cm-jm.okvpn.xyz",
+            "port": 20047,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cm-jm.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ru.52jjyun.top",
+            "port": 80,
+            "users": [
+              {
+                "id": "613eee52-bfd9-47d1-a47d-37bdf1367aab",
+                "alterId": 10
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/jjyun",
+          "headers": {
+            "Host": "ru.52jjyun.top"
+          }
+        }
+      },
+      "tag": "613eee52-bfd9-47d1-a47d-37bdf1367aab"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "global-transit-01-hn.pucdn.me",
+            "port": 60001,
+            "users": [
+              {
+                "id": "0e4a0f2f-9cc9-3b11-9e6a-4392c4fcfc6c",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/vvv",
+          "headers": {
+            "Host": "global-transit-01-hn.pucdn.me"
+          }
+        }
+      },
+      "tag": "0e4a0f2f-9cc9-3b11-9e6a-4392c4fcfc6c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "free-russian-cdn.xiaohouzi.club",
+            "port": 443,
+            "users": [
+              {
+                "id": "e64c6f7c-48eb-4852-9b29-778faef14212",
+                "alterId": 233
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/319285eb2d/",
+          "headers": {
+            "Host": "free-russian-cdn.xiaohouzi.club"
+          }
+        }
+      },
+      "tag": "e64c6f7c-48eb-4852-9b29-778faef14212"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xe3rayu3.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "xe3rayu3.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "italy-milan.mah3Hoet.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "italy-milan.mah3Hoet.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1116yn.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "915ru1.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cm-jm.okvpn.xyz",
+            "port": 20049,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cm-jm.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ru.52jjyun.top",
+            "port": 80,
+            "users": [
+              {
+                "id": "613eee52-bfd9-47d1-a47d-37bdf1367aab",
+                "alterId": 10
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/jjyun",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "613eee52-bfd9-47d1-a47d-37bdf1367aab"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "canada-vancouver.mah3Hoet.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "canada-vancouver.mah3Hoet.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "aicoo6du.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "aicoo6du.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cm.cf.cname.club",
+            "port": 2052,
+            "users": [
+              {
+                "id": "6e902fde-dcb1-4d5a-9079-8c086d867954",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "us.cname.club"
+          }
+        }
+      },
+      "tag": "6e902fde-dcb1-4d5a-9079-8c086d867954"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "switzerland-zurich.mah3Hoet.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "switzerland-zurich.mah3Hoet.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cm-jm.okvpn.xyz",
+            "port": 20005,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cm-jm.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "eeh7iewe.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "eeh7iewe.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "eeh7iewe.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "8.214.46.152",
+            "port": 50885,
+            "users": [
+              {
+                "id": "d064d11b-477c-4c5d-a2d8-9fd599ef8e79",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "8.214.46.152"
+          }
+        }
+      },
+      "tag": "d064d11b-477c-4c5d-a2d8-9fd599ef8e79"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1023sg.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "Ze9baeS5.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "Ze9baeS5.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ahH4eihu.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "ahH4eihu.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1116hk.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "715hk.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "930tg.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "923my.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cm-jm.okvpn.xyz",
+            "port": 20002,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cm-jm.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cmhk04.xc188.net",
+            "port": 443,
+            "users": [
+              {
+                "id": "65cac56d-4155-43c8-bae0-f368cb21f771",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/clientarea",
+          "headers": {
+            "Host": "cmhk04.xc188.net"
+          }
+        }
+      },
+      "tag": "65cac56d-4155-43c8-bae0-f368cb21f771"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zhuzhu12.com",
+            "port": 12819,
+            "users": [
+              {
+                "id": "d6a85728-37ef-38bf-8c0d-801f0c5044ee",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "d6a85728-37ef-38bf-8c0d-801f0c5044ee"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zhuzhu12.com",
+            "port": 12819,
+            "users": [
+              {
+                "id": "d6a85728-37ef-38bf-8c0d-801f0c5044ee",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/zz",
+          "headers": {
+            "Host": "zhuzhu12.com"
+          }
+        }
+      },
+      "tag": "d6a85728-37ef-38bf-8c0d-801f0c5044ee"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 60038,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 60038,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "zj.haojiahuo.club"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30041,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30044,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30057,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30052,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1031kr.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30077,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30045,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "xuexi.cn"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "zj.haojiahuo.club",
+            "port": 30057,
+            "users": [
+              {
+                "id": "4a6ada0c-e453-3217-8210-8556f9c92494",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/videos",
+          "headers": {
+            "Host": "zj.haojiahuo.club"
+          }
+        }
+      },
+      "tag": "4a6ada0c-e453-3217-8210-8556f9c92494"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cu-cs.okvpn.xyz",
+            "port": 30013,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cu-cs.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "usa-lasvegas.lvuft.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "107.189.12.75",
+            "port": 80,
+            "users": [
+              {
+                "id": "261aeb5f-b6f7-359c-a321-9794bf344e12",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "261aeb5f-b6f7-359c-a321-9794bf344e12"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "usa-lasvegas.lvuft.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "usa-lasvegas.lvuft.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cu-cs.okvpn.xyz",
+            "port": 30014,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cu-cs.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "64.32.13.3",
+            "port": 443,
+            "users": [
+              {
+                "id": "4dc574eb-94e8-439e-aad6-4d74df1a38c5",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/path/323127100515",
+          "headers": {
+            "Host": "www.12001759.xyz"
+          }
+        }
+      },
+      "tag": "4dc574eb-94e8-439e-aad6-4d74df1a38c5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ukml.52jjyun.top",
+            "port": 80,
+            "users": [
+              {
+                "id": "613eee52-bfd9-47d1-a47d-37bdf1367aab",
+                "alterId": 10
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/jjyun",
+          "headers": {
+            "Host": "ukml.52jjyun.top"
+          }
+        }
+      },
+      "tag": "613eee52-bfd9-47d1-a47d-37bdf1367aab"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "137.184.184.83",
+            "port": 2053,
+            "users": [
+              {
+                "id": "5580bd79-ba49-3f67-a710-5b917bdac2d8",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5580bd79-ba49-3f67-a710-5b917bdac2d8"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "ukml.52jjyun.top",
+            "port": 80,
+            "users": [
+              {
+                "id": "613eee52-bfd9-47d1-a47d-37bdf1367aab",
+                "alterId": 10
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/jjyun",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "613eee52-bfd9-47d1-a47d-37bdf1367aab"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1030us.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "usa-buffalo.lvuft.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "usa-buffalo.lvuft.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "usa-sanfrancisco.lvuft.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "usa-sanfrancisco.lvuft.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "137.184.184.83",
+            "port": 2053,
+            "users": [
+              {
+                "id": "5580bd79-ba49-3f67-a710-5b917bdac2d8",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5580bd79-ba49-3f67-a710-5b917bdac2d8"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.19.101.3",
+            "port": 2053,
+            "users": [
+              {
+                "id": "bf67437e-6c90-45ca-abc2-c7240a5ce2aa",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/gdo93qerwtyuo",
+          "headers": {
+            "Host": "e.fovi.tk"
+          }
+        }
+      },
+      "tag": "bf67437e-6c90-45ca-abc2-c7240a5ce2aa"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "usa-washington.lvuft.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.17.170.210",
+            "port": 443,
+            "users": [
+              {
+                "id": "d064d11b-477c-4c5d-a2d8-9fd599ef8e79",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "kycc",
+          "headers": {
+            "Host": "lsb.stupidfellow.cf"
+          }
+        }
+      },
+      "tag": "d064d11b-477c-4c5d-a2d8-9fd599ef8e79"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "usa-washington.lvuft.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "usa-washington.lvuft.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "107.189.12.75",
+            "port": 80,
+            "users": [
+              {
+                "id": "261aeb5f-b6f7-359c-a321-9794bf344e12",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": "107.189.12.75"
+          }
+        }
+      },
+      "tag": "261aeb5f-b6f7-359c-a321-9794bf344e12"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "uk-manchester.eiw2eemo.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "aba50dd4-5484-3b05-b14a-4661caf862d5",
+                "alterId": 4
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ws",
+          "headers": {
+            "Host": "uk-manchester.eiw2eemo.com"
+          }
+        }
+      },
+      "tag": "aba50dd4-5484-3b05-b14a-4661caf862d5"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cu-cs.okvpn.xyz",
+            "port": 30022,
+            "users": [
+              {
+                "id": "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cu-cs.okvpn.xyz"
+          }
+        }
+      },
+      "tag": "2f44cc43-b8e4-4af1-817f-bf09091ca932"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.26.9.74",
+            "port": 443,
+            "users": [
+              {
+                "id": "f6c1babe-416e-47d1-8726-049678e25c7a",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/sshocean",
+          "headers": {
+            "Host": "us2.v2rayserv.com"
+          }
+        }
+      },
+      "tag": "f6c1babe-416e-47d1-8726-049678e25c7a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "137.184.184.78",
+            "port": 2052,
+            "users": [
+              {
+                "id": "5580bd79-ba49-3f67-a710-5b917bdac2d8",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5580bd79-ba49-3f67-a710-5b917bdac2d8"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "us1nhg-node.aiqiche123.com",
+            "port": 13723,
+            "users": [
+              {
+                "id": "a90597c1-bab3-4217-ad6f-0838675c8634",
+                "alterId": 10
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "ray",
+          "headers": {
+            "Host": "us1nhg-node.aiqiche123.com"
+          }
+        }
+      },
+      "tag": "a90597c1-bab3-4217-ad6f-0838675c8634"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "137.184.184.78",
+            "port": 2052,
+            "users": [
+              {
+                "id": "5580bd79-ba49-3f67-a710-5b917bdac2d8",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5580bd79-ba49-3f67-a710-5b917bdac2d8"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "1030tw.fans8.xyz",
+            "port": 80,
+            "users": [
+              {
+                "id": "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+                "alterId": 2
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "none",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/v2ray",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "7ea3f9bb-2082-3d43-b825-6bf7a052314a"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xin.cthgo.me",
+            "port": 6812,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xg2.cthgo.me",
+            "port": 43587,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "huluwa0528.herokuapp.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "c0fc8428-034f-414b-9dfb-52b5cf7d25bb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/c0fc8428-034f-414b-9dfb-52b5cf7d25bb-vmess",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "c0fc8428-034f-414b-9dfb-52b5cf7d25bb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "lulu0528.herokuapp.com",
+            "port": 443,
+            "users": [
+              {
+                "id": "c0fc8428-034f-414b-9dfb-52b5cf7d25bb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/c0fc8428-034f-414b-9dfb-52b5cf7d25bb-vmess",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "c0fc8428-034f-414b-9dfb-52b5cf7d25bb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "13.125.210.77",
+            "port": 16762,
+            "users": [
+              {
+                "id": "9c2777c5-8530-4cfe-abb6-c1734d220602",
+                "alterId": 64,
+                "security": "auto"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp"
+      },
+      "tag": "9c2777c5-8530-4cfe-abb6-c1734d220602"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xin.cthgo.me",
+            "port": 10096,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xin.cthgo.me",
+            "port": 6811,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "91.245.227.135",
+            "port": 38166,
+            "users": [
+              {
+                "id": "9551d4fd-610e-4bf3-9f93-1df5452c3654",
+                "alterId": 32
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "9551d4fd-610e-4bf3-9f93-1df5452c3654"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xin.cthgo.me",
+            "port": 5467,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xin.cthgo.me",
+            "port": 5466,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xg2.cthgo.me",
+            "port": 43585,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "cthtw.accesscam.org",
+            "port": 10099,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xin.cthgo.me",
+            "port": 2020,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "xin.cthgo.me",
+            "port": 5465,
+            "users": [
+              {
+                "id": "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": ""
+          }
+        }
+      },
+      "tag": "5a44027c-9183-4cf8-8778-d3cdc90852fb"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.19.64.83",
+            "port": 443,
+            "users": [
+              {
+                "id": "e1934f6e-ae2c-41e7-8877-844152137c1e",
+                "alterId": 1
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/xrayvws",
+          "headers": {
+            "Host": "buy.1808.cf"
+          }
+        }
+      },
+      "tag": "e1934f6e-ae2c-41e7-8877-844152137c1e"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.21.48.161",
+            "port": 443,
+            "users": [
+              {
+                "id": "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cdnde.irteyz.today"
+          }
+        }
+      },
+      "tag": "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.18.7.138",
+            "port": 443,
+            "users": [
+              {
+                "id": "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cdnde.irteyz.today"
+          }
+        }
+      },
+      "tag": "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "172.67.154.85",
+            "port": 443,
+            "users": [
+              {
+                "id": "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cdnde.irteyz.today"
+          }
+        }
+      },
+      "tag": "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.18.6.138",
+            "port": 443,
+            "users": [
+              {
+                "id": "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/",
+          "headers": {
+            "Host": "cdnde.irteyz.today"
+          }
+        }
+      },
+      "tag": "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "104.19.1.168",
+            "port": 443,
+            "users": [
+              {
+                "id": "f299184b-19e0-41a4-9b4b-65fa8f0e691c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/jj",
+          "headers": {
+            "Host": "c-jp1.ooxc.cc"
+          }
+        }
+      },
+      "tag": "f299184b-19e0-41a4-9b4b-65fa8f0e691c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "45.62.245.20",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t1.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "45.62.233.34",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t2.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "142.47.222.7",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t3.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "142.47.219.13",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t4.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "45.62.229.13",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t5.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "194.5.79.73",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t6.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "205.185.122.222",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t7.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "213.59.118.168",
+            "port": 2053,
+            "users": [
+              {
+                "id": "3ce5e294-bfa5-11eb-a622-aa22ff9a3d19",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/8PYgyBid/",
+          "headers": {
+            "Host": "t8.ssrsub.one"
+          }
+        }
+      },
+      "tag": "3ce5e294-bfa5-11eb-a622-aa22ff9a3d19"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.gov.hk",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t1.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.gov.hk",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t2.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.gov.hk",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t3.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.gov.hk",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t4.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.gov.hk",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t5.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.gov.hk",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t6.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.gov.hk",
+            "port": 443,
+            "users": [
+              {
+                "id": "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+                "alterId": 64
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/ssrsub",
+          "headers": {
+            "Host": "t7.ssrsub.one"
+          }
+        }
+      },
+      "tag": "56a8c421-0d29-4b6b-c916-46e6f35ef98c"
+    },
+    {
+      "protocol": "vmess",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.gov.hk",
+            "port": 2053,
+            "users": [
+              {
+                "id": "3ce5e294-bfa5-11eb-a622-aa22ff9a3d19",
+                "alterId": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          "allowInsecure": true
+        },
+        "wsSettings": {
+          "path": "/8PYgyBid/",
+          "headers": {
+            "Host": "t8.ssrsub.one"
+          }
+        }
+      },
+      "tag": "3ce5e294-bfa5-11eb-a622-aa22ff9a3d19"
+    }
+  ],
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        "ip": [
+          "geoip:cn",
+          "geoip:private"
+        ],
+        "outboundTag": "api"
+      },
+      {
+        "type": "field",
+        "outboundTag": "api",
+        "domain": [
+          "localhost",
+          "geosite:cn"
+        ]
+      },
+      {
+        "type": "field",
+        "network": "tcp,udp",
+        "balancerTag": "b1"
+      }
+    ],
+    "balancers": [
+      {
+        "tag": "b1",
+        "selector": [
+          "c52e27cd-9c9c-44a2-9371-125b1ea8953c",
+          "ce14d788-0f79-491e-85ca-05240612f28a",
+          "05b6b25b-bb5d-4dcd-9710-31e374ffa584",
+          "8c793b65-9d27-4a74-b952-7c679dac3391",
+          "cf79d0ab-7c88-46cc-b5e6-1fd713b0b423",
+          "05b6b25b-bb5d-4dcd-9710-31e374ffa584",
+          "9140c163-8072-486c-b735-b3f8b1b96321",
+          "9140c163-8072-486c-b735-b3f8b1b96321",
+          "9140c163-8072-486c-b735-b3f8b1b96321",
+          "9140c163-8072-486c-b735-b3f8b1b96321",
+          "9140c163-8072-486c-b735-b3f8b1b96321",
+          "9140c163-8072-486c-b735-b3f8b1b96321",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "b30e3ee3-0353-4df4-a7cc-8613d0138106",
+          "76329684-c5d2-4cf7-fcf5-06ad79a6aab3",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "3f15492a-54a6-4eda-846b-bdfb049b0a27",
+          "f944883a-a9fb-4ee8-b08b-aaf920f4c393",
+          "f944883a-a9fb-4ee8-b08b-aaf920f4c393",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "c269d32f-56e3-4cc9-9029-df1c1d41809b",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "f944883a-a9fb-4ee8-b08b-aaf920f4c393",
+          "8581d15e-ae94-3fda-9de5-e8dff1c05e23",
+          "3c7919b0-87bd-3399-abd2-a79cd334c0c2",
+          "98e96c9f-4bb3-39d4-9a2c-fac04257f7c7",
+          "8ccc3052-4941-47e4-b85f-a67ea71e3fe6",
+          "c269d32f-56e3-4cc9-9029-df1c1d41809b",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "e5af0cad-295c-37b2-b601-f35d13f6b1bb",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "57e0cb4d-eae5-48ec-8091-149dc2b309e0",
+          "c514da5d-c7f9-4e9a-fd56-6cbf7a3c0542",
+          "cad27f94-36c5-4038-884d-7551a92510c3",
+          "76329684-c5d2-4cf7-fcf5-06ad79a6aab3",
+          "d064d11b-477c-4c5d-a2d8-9fd599ef8e79",
+          "3c7919b0-87bd-3399-abd2-a79cd334c0c2",
+          "fec5fd62-56e7-431a-99b3-c1f76c5cbe8d",
+          "fec5fd62-56e7-431a-99b3-c1f76c5cbe8d",
+          "76329684-c5d2-4cf7-fcf5-06ad79a6aab3",
+          "d064d11b-477c-4c5d-a2d8-9fd599ef8e79",
+          "e5af0cad-295c-37b2-b601-f35d13f6b1bb",
+          "e5af0cad-295c-37b2-b601-f35d13f6b1bb",
+          "a90597c1-bab3-4217-ad6f-0838675c8634",
+          "d6a85728-37ef-38bf-8c0d-801f0c5044ee",
+          "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+          "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+          "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+          "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+          "8b94b74b-ce5d-3777-88f6-25aa7c7d05dd",
+          "d6a85728-37ef-38bf-8c0d-801f0c5044ee",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "613eee52-bfd9-47d1-a47d-37bdf1367aab",
+          "0e4a0f2f-9cc9-3b11-9e6a-4392c4fcfc6c",
+          "e64c6f7c-48eb-4852-9b29-778faef14212",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "613eee52-bfd9-47d1-a47d-37bdf1367aab",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "6e902fde-dcb1-4d5a-9079-8c086d867954",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "d064d11b-477c-4c5d-a2d8-9fd599ef8e79",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "65cac56d-4155-43c8-bae0-f368cb21f771",
+          "d6a85728-37ef-38bf-8c0d-801f0c5044ee",
+          "d6a85728-37ef-38bf-8c0d-801f0c5044ee",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "4a6ada0c-e453-3217-8210-8556f9c92494",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "261aeb5f-b6f7-359c-a321-9794bf344e12",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "4dc574eb-94e8-439e-aad6-4d74df1a38c5",
+          "613eee52-bfd9-47d1-a47d-37bdf1367aab",
+          "5580bd79-ba49-3f67-a710-5b917bdac2d8",
+          "613eee52-bfd9-47d1-a47d-37bdf1367aab",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "5580bd79-ba49-3f67-a710-5b917bdac2d8",
+          "bf67437e-6c90-45ca-abc2-c7240a5ce2aa",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "d064d11b-477c-4c5d-a2d8-9fd599ef8e79",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "261aeb5f-b6f7-359c-a321-9794bf344e12",
+          "aba50dd4-5484-3b05-b14a-4661caf862d5",
+          "2f44cc43-b8e4-4af1-817f-bf09091ca932",
+          "f6c1babe-416e-47d1-8726-049678e25c7a",
+          "5580bd79-ba49-3f67-a710-5b917bdac2d8",
+          "a90597c1-bab3-4217-ad6f-0838675c8634",
+          "5580bd79-ba49-3f67-a710-5b917bdac2d8",
+          "7ea3f9bb-2082-3d43-b825-6bf7a052314a",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "c0fc8428-034f-414b-9dfb-52b5cf7d25bb",
+          "c0fc8428-034f-414b-9dfb-52b5cf7d25bb",
+          "9c2777c5-8530-4cfe-abb6-c1734d220602",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "9551d4fd-610e-4bf3-9f93-1df5452c3654",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "5a44027c-9183-4cf8-8778-d3cdc90852fb",
+          "e1934f6e-ae2c-41e7-8877-844152137c1e",
+          "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2",
+          "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2",
+          "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2",
+          "3b5e258e-8c5e-45d3-b7d2-02c8f5fc0bb2",
+          "f299184b-19e0-41a4-9b4b-65fa8f0e691c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "3ce5e294-bfa5-11eb-a622-aa22ff9a3d19",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "56a8c421-0d29-4b6b-c916-46e6f35ef98c",
+          "3ce5e294-bfa5-11eb-a622-aa22ff9a3d19"
+        ]
+      }
+    ]
+  }
+}

@@ -113,6 +113,8 @@ v2rayExecLocal=os.path.join(os.getcwd(),"v2ray-core", os.name,"v2ray")
 SHARE_QUANTUMULT_QRCODE_PATH=os.path.join(os.getcwd(),"qrcode")
 TEST_PORT_BASE = 10080
 SERVER_PORT = 10800
+USER="linyaoji"
+PASSWORD="bullshit-123"
 
 testFileUrl="http://cachefly.cachefly.net/10mb.test"
 google_url = "https://www.github.com"
@@ -214,21 +216,6 @@ class SpeedTest(object):
             logger.debug("has terminated.")
         
     
-
-def make_qrcode_png(v2Node):
-    quantumult_url = v2Node.to_quantumult_url()
-    logger.debug("quantumult_url *%s"%quantumult_url)
-
-    vmess_qr = pyqrcode.create(quantumult_url, error='H')
-    try:
-        if not os.path.exists(SHARE_QUANTUMULT_QRCODE_PATH):
-            os.makedirs(SHARE_QUANTUMULT_QRCODE_PATH)
-        name = validateTitle(v2Node.remark)    
-        str_path = "{}/{}-{}.png".format(SHARE_QUANTUMULT_QRCODE_PATH, name, v2Node.uuid)
-        # str_path = validateTitle(str_path)
-        vmess_qr.png( str_path, scale=5)
-    except Exception as e:
-        logger.error('Unable to save file![%s]'%e)
 
 def ping_node(ip):
     if os.name == 'linux':
@@ -369,7 +356,9 @@ def start(args):
             subprocess.run('rm -rf go.sh', shell=True)
     elif os.name =="nt":
         logging.debug("使用系统代理")
-        proxies = { "http": "http://linyaoji:fuckyou-321@10.255.251.141:8080", "https": "http://linyaoji:fuckyou-321@10.255.251.141:8080"}    
+
+        proxies = { "http": "http://"+USER+":"+PASSWORD+"@10.255.251.141:8080", "https": "http://"+USER+":"+PASSWORD+"@10.255.251.141:8080"}    
+        # proxies = { "http": "http://linyaoji:fuckyou-321@10.255.251.141:8080", "https": "http://linyaoji:fuckyou-321@10.255.251.141:8080"}    
     elif os.name =="posix":
         pass    
     # 本脚本的配置文件，目前的作用是仅存储用户输入的订阅地址，这样用户再次启动脚本时，就无需再输入订阅地址。
@@ -450,7 +439,19 @@ def start(args):
                         v2Node = V2ray(serverNode['add'], int(serverNode['port']), serverNode['ps'], 'auto', serverNode['id'], int(serverNode['aid']), serverNode['net'], serverNode['type'], serverNode['host'], serverNode['path'], serverNode['tls'])                
                         
                         serverListLink.append(v2Node)
-                        
+                        quantumult_url = v2Node.to_quantumult_url()
+                        logger.debug("quantumult_url *%s"%quantumult_url)
+
+                        vmess_qr = pyqrcode.create(quantumult_url, error='H')
+                        try:
+                            if not os.path.exists(SHARE_QUANTUMULT_QRCODE_PATH):
+                                os.makedirs(SHARE_QUANTUMULT_QRCODE_PATH)
+                            name = validateTitle(v2Node.remark)    
+                            str_path = "{}\{}-{}.png".format(SHARE_QUANTUMULT_QRCODE_PATH, name, v2Node.uuid)
+                            # str_path = validateTitle(str_path)
+                            vmess_qr.png( str_path, scale=5)
+                        except Exception as e:
+                            logger.error('Unable to save file![%s]'%e)
                 except BaseException  as e:
                     logger.error("%d node error.[%s]"%(i,e))
                     pass
@@ -522,7 +523,6 @@ def start(args):
         for i in range(len(serverListLink)):
             if serverListLink[i].valid:
                 print("speed test result-[{}] - [{}].".format(serverListLink[i].remark,serverListLink[i].valid))
-                make_qrcode_png(serverListLink[i])
         
         print("speed test done.")
 
@@ -552,7 +552,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="多媒体http服务",
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-m','--mode', help="change_node | speed_test", default='change_node')
+    parser.add_argument('-m','--mode', help="change_node | speed_test", default='speed_test')
     parser.add_argument("-u", "--update", help="update subscribe", action='store_true')
     parser.add_argument("-t", "--threads", help="speed test threads", default=1)
     parser.add_argument("-v", "--verbose", help="Verbose logging", action='store_true')
