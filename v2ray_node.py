@@ -18,7 +18,7 @@ from concurrent.futures import (
 
 from requests.api import request
 
-urls = ['https://www.twitter.com/',
+urls = [
         'https://www.github.com/',
         'https://www.facebook.com/',
         'https://www.youtube.com/'

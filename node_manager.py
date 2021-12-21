@@ -320,7 +320,7 @@ class ConnectTest(NodeBase):
             else:
                 logger.info("[%d] %s -- FAIL " % (index, node.remark))
         except Exception as e:            
-            # logger.error(e)
+            logger.debug(e)
             logger.info("[%d] %s -- FAIL " % ( index,node.remark))
         finally:
             test.shutdown() 
@@ -379,7 +379,7 @@ class ProxyManager(NodeBase):
                 else:
                     flag = True
                 self.message_queue.put(Message(node,"update"))
-                time.sleep(30)
+                time.sleep(36)
             self.message_queue.put(Message(node,"delete"))
             # logger.info("[%s][%d] LOST " % (node.remark,PROXY_PORT_BASE + index))
         except Exception as e:
@@ -438,8 +438,9 @@ class OnlyOneService(NodeBase):
             count = 5
             flag = True
             while count > 0:
-                print("[%s]OFFER PORT:%d" % (node.remark,PROXY_PORT_BASE + index))                
+                                
                 speed = test.test_connect()
+                logger.info("%d, [%d]ms" % (PROXY_PORT_BASE + index,speed))
                 if  speed  <0:
                     if not flag:
                         count = count -1

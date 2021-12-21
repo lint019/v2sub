@@ -389,7 +389,7 @@ class V2ray(Node):
                     "port": 1080,
                     "listen": "127.0.0.1",
                     "protocol": "http",
-                    "tag":self.uuid,
+                    "tag":'proxy',
                 },
             ],
             "outbounds": [],
@@ -494,7 +494,7 @@ class V2ray(Node):
                         ]
                     },
                     "streamSettings": {"network": "tcp"},
-                    "tag":node.uuid,
+                    "tag":"%s-%s"%(node.ip,node.uuid),
                 }
             )
             
@@ -527,7 +527,7 @@ class V2ray(Node):
                             },
                         },
                     },
-                    "tag":node.uuid,
+                    "tag":"%s-%s"%(node.ip,node.uuid),
                 }
             )
             
@@ -556,7 +556,7 @@ class V2ray(Node):
                             "headers": {"Host": node.camouflageHost},
                         },
                     },
-                    "tag":node.uuid,
+                    "tag":"%s-%s"%(node.ip,node.uuid),
                 }
             )
             
@@ -585,7 +585,7 @@ class V2ray(Node):
                             "host": [node.camouflageHost],
                         },
                     },
-                    "tag":node.uuid,
+                    "tag":"%s-%s"%(node.ip,node.uuid),
                 }
             )
 
@@ -606,7 +606,8 @@ class V2ray(Node):
         config["routing"]["balancers"]=balance
         for item in services:
             self.add_outbound(config["outbounds"],item)
-            config["routing"]["balancers"][0]["selector"].append(item.uuid)
+            if "%s-%s"%(item.ip,item.uuid) not in config["routing"]["balancers"][0]["selector"]:                
+                config["routing"]["balancers"][0]["selector"].append("%s-%s"%(item.ip,item.uuid))
                         
         rule = {
             "type": "field",

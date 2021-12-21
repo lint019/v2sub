@@ -3,6 +3,8 @@ import argparse
 import os
 import shutil
 import pathlib
+import platform
+system = platform.system().lower()
 
 from node_manager import *
 
@@ -11,6 +13,13 @@ logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 
+def set_macos_proxy_on(proxy, port):
+    os.system('networksetup -setwebproxy Ethernet ' + proxy + ' ' + str(port))
+    os.system('networksetup -setsecurewebproxy Ethernet ' + proxy + ' ' + str(port))
+    # os.system('networksetup -setwebproxy Ethernet on')
+def set_macos_proxy_off():
+    os.system('networksetup -setwebproxystate Ethernet off')
+    os.system('networksetup -setsecurewebproxystate Ethernet off')
 
 def startTest(args):
 
@@ -25,6 +34,8 @@ def startTest(args):
     
     #一个服务，负载平衡
     if len(services)>0:
+        if system=='darwin':
+            set_macos_proxy_on('127.0.0.1',20081)
         proxies = OnlyOneService(args) 
         proxies.offer(services)
     
@@ -55,10 +66,13 @@ if __name__ == "__main__":
     if args.verbose:
         logging.getLogger().setLevel(logging.DEBUG)
 
+    isnot_android = 'ANDROID_STORAGE' not in os.environ
 
+    if isnot_android:
+        args.root_dir = os.path.dirname(os.path.realpath(__file__))
     dir_path = os.path.dirname(os.path.realpath(__file__))
     subFilePath = os.path.join(args.root_dir, "v2sub.conf")
-    args.exe_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "v2ray-core", os.name, "v2ray")
+    args.exe_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), "v2ray-core", system, "v2ray")
     args.proxies ={}
     if os.name == "linux":
         pass
