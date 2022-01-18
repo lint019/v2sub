@@ -21,7 +21,7 @@ class V2ray(Node):
     camouflageTls = ""
     root_dir = "."
     proxy_port=0
-
+    speed_detail={}
     def __init__(
         self,        
         ip,
@@ -51,10 +51,17 @@ class V2ray(Node):
     @property
     def valid(self):
         return self._valid
-
     @valid.setter
     def valid(self, value):
         self._valid = value
+
+    @property
+    def speed_info(self):
+        return self.speed_detail
+
+    @speed_info.setter
+    def speed_info(self, value):
+        self.speed_detail = value
 
     def formatConfig0(self):
         v2rayConf = {
@@ -276,6 +283,7 @@ class V2ray(Node):
                             }
                         ]
                     },
+                    "mux": {"enabled": True},
                     "streamSettings": {"network": "tcp"},
                     "tag": "proxy",
                 }
@@ -311,6 +319,7 @@ class V2ray(Node):
                             },
                         },
                     },
+                    "mux": {"enabled": True},
                     "tag": "proxy",
                 }
             )
@@ -389,7 +398,7 @@ class V2ray(Node):
                     "port": 1080,
                     "listen": "127.0.0.1",
                     "protocol": "http",
-                    "tag":'proxy',
+                    "tag":self.uuid,
                 },
             ],
             "outbounds": [],
@@ -493,8 +502,9 @@ class V2ray(Node):
                             }
                         ]
                     },
+                    "mux": {"enabled": True},
                     "streamSettings": {"network": "tcp"},
-                    "tag":"%s-%s"%(node.ip,node.uuid),
+                    "tag":node.uuid,
                 }
             )
             
@@ -527,7 +537,8 @@ class V2ray(Node):
                             },
                         },
                     },
-                    "tag":"%s-%s"%(node.ip,node.uuid),
+                    "mux": {"enabled": True},
+                    "tag":node.uuid,
                 }
             )
             
@@ -556,7 +567,8 @@ class V2ray(Node):
                             "headers": {"Host": node.camouflageHost},
                         },
                     },
-                    "tag":"%s-%s"%(node.ip,node.uuid),
+                    "mux": {"enabled": True},
+                    "tag":node.uuid,
                 }
             )
             
@@ -585,7 +597,8 @@ class V2ray(Node):
                             "host": [node.camouflageHost],
                         },
                     },
-                    "tag":"%s-%s"%(node.ip,node.uuid),
+                    "mux": {"enabled": True},
+                    "tag":node.uuid,
                 }
             )
 
@@ -606,8 +619,7 @@ class V2ray(Node):
         config["routing"]["balancers"]=balance
         for item in services:
             self.add_outbound(config["outbounds"],item)
-            if "%s-%s"%(item.ip,item.uuid) not in config["routing"]["balancers"][0]["selector"]:                
-                config["routing"]["balancers"][0]["selector"].append("%s-%s"%(item.ip,item.uuid))
+            config["routing"]["balancers"][0]["selector"].append(item.uuid)
                         
         rule = {
             "type": "field",

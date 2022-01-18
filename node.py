@@ -11,7 +11,8 @@ class Node:
     remark = ''
     # jiamiafangshi
     security = ''
-    speed=0
+    speed=-1
+    
 
     def __init__(self, ip, port, remark, security):
         self.ip = ip

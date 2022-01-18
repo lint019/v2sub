@@ -3,6 +3,8 @@ import logging
 import os
 import subprocess
 from time import sleep
+import platform
+system = platform.system().lower()
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -19,8 +21,12 @@ def start(name):
             pass
         elif os.name == "posix":
             exec = "python3"
-        p = subprocess.Popen([exec, name,"-u"])
-        # p = subprocess.Popen([exec, name,"-u","-v"])
+            is_android = 'ANDROID_STORAGE' in os.environ
+            if is_android:
+                exec = "/vendor/bin/python3/bin/python3"
+                
+        # p = subprocess.Popen([exec, name,"-u"])
+        p = subprocess.Popen([exec, name,"-u","-v"])
         status = p.wait()   
     except Exception as e:
         logger.error("run error.")

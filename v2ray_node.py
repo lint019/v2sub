@@ -19,9 +19,7 @@ from concurrent.futures import (
 from requests.api import request
 
 urls = [
-        'https://www.github.com/',
-        'https://www.facebook.com/',
-        'https://www.youtube.com/'
+        'https://www.youtube.com/'        
         ]
 
 logger = logging.getLogger(__name__)
@@ -48,7 +46,7 @@ class Testing(object):
             resp = requests.get(url,proxies=proxies,timeout=self.args.connect_timeout)      
             if resp.status_code == 200:
                 ret = resp.elapsed.microseconds/1000
-                # print ('[%d][%s] [%s] OK!'%(ret,self.args.name,url))                
+                print ('[%d][%s] [%s] OK!'%(ret,self.args.name,url))                
             else:
                 print('[%s] [%s]Boo!'%(url,self.args.name))
             # req = urllib.request.Request(url)
@@ -70,13 +68,13 @@ class Testing(object):
         while  not queue.empty():
             url = queue.get()
             # print ('test connect[%s] !'%(url))
-            return self.is_connect(url)
+            return self.is_connect(url),url
         
-    def test(self):
+    def test(self,urls=[]):
         pipeline = queue.Queue()
         for item in urls:
             pipeline.put(item)
-        
+    
         executor = ThreadPoolExecutor(max_workers=5)
 
         logger.debug(" pipeline size = %d" % pipeline.qsize())
@@ -84,26 +82,29 @@ class Testing(object):
             executor.submit(self.do_action, pipeline)
             for item in urls
         ]
+        result=[]
+        for future in as_completed(tasks):
+            speed,url = future.result()
+            t={}
+            t['url']=url
+            t['speed']=speed
+            result.append(t)
 
-        # for future in as_completed(tasks):
-        #     ok = future.result()
-        #     if ok:
-        #         return True
-        while tasks:
-            done, not_done = wait(tasks,
-                    return_when=FIRST_COMPLETED)
-            for future in done:
-                ok = future.result()
-                if ok >= 0:
-                    for task in not_done:
-                        task.cancel()
-                    return ok
-            # if len(not_done)==0:
-            #     break
-            tasks = not_done
+        wait(tasks, return_when=ALL_COMPLETED)
+        return result
+        # while tasks:
+        #     done, not_done = wait(tasks,
+        #             return_when=FIRST_COMPLETED)
+        #     for future in done:
+        #         ok,url = future.result()
+        #         if ok >= 0:
+        #             for task in not_done:
+        #                 task.cancel()
+        #             return ok,url
+        #     tasks = not_done
 
 
-        return -1
+        return -1,''
 
 
 class V2RayCore(object):
@@ -131,10 +132,12 @@ class V2RayCore(object):
         self.config["inbounds"][0]["listen"] = "0.0.0.0"
         self.config["inbounds"][0]["protocol"] = "http"
         self.config["log"]["access"] = os.path.join(
-            root_dir, "log/access_%d.log"%self.listen_port
+            root_dir, "log/access.log"
+            # root_dir, "log/access_%d.log"%self.listen_port
         )
         self.config["log"]["error"] = os.path.join(
-            root_dir,  "log/err_%d.log"%self.listen_port
+            root_dir,  "log/err.log"
+            # root_dir,  "log/err_%d.log"%self.listen_port
         )
         log_path = os.path.join(root_dir,  "log")
         if not os.path.exists(log_path):
@@ -142,12 +145,13 @@ class V2RayCore(object):
 
         logger.debug(json.dumps(self.config))
         json.dump(self.config, open(tmp, "w"), indent=2)
-        logger.debug("run test: %s -config %s" % (self.v2rayExecLocal, tmp))
-        self.p = subprocess.Popen([self.v2rayExecLocal, "-config", tmp],stdout=subprocess.PIPE,stderr=subprocess.PIPE)        
+        logger.debug("run test: %s -config %s" % (self.v2rayExecLocal, tmp))        
         try:
+            self.p = subprocess.Popen([self.v2rayExecLocal, "-config", tmp],stdout=subprocess.PIPE,stderr=subprocess.PIPE)        
             output, err  = self.p.communicate(timeout=5)
             logger.debug("read err %s" % (err))
-        except Exception as e:
+        except Exception as e:        
+            logger.debug("execute err %s" % (e))
             pass
         
         count = 15
@@ -159,8 +163,9 @@ class V2RayCore(object):
 
         logger.debug("V2RAY RUN OK" )
 
-    def test_connect(self):
-        ret = -1
+    def test_connect(self,urls=[]):
+        ret = []
+        url=''
         # while self.p.poll() == 0:
         #     logger.debug("wait a sec.")
         #     time.sleep(1)
@@ -168,7 +173,7 @@ class V2RayCore(object):
             self.args.name = self.config["remark"]
             self.args.port =self.listen_port
             tester = Testing(self.args)
-            ret = tester.test()
+            ret = tester.test(urls)
         except Exception as e:
             logger.debug('[%s] test_connect error!'%(e))
             pass

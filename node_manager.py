@@ -26,7 +26,7 @@ from utils import *
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s -{%(pathname)s:%(lineno)d}- %(message)s"
 )
 
 
@@ -42,6 +42,32 @@ def producer(queue, event):
         queue.put(message)
 
     logging.info("Producer received event. Exiting")
+
+
+class DNSSD(object):
+    def __init__(self, name,domain="local",type="_http._tcp",port=20081,txt=""):
+        self.type = type
+        self.name =name
+        self.domain = domain
+        self.p =None;
+        self.exec_path = "/vendor/bin/dnssd"
+        self.port = port
+        self.txt = txt
+
+    def run(self):        
+        try:
+            self.p = subprocess.Popen([self.exec_path, "-R",self.name,self.type,self.domain,str(self.port),self.txt],stdout=subprocess.PIPE,stderr=subprocess.PIPE)        
+            output, err  = self.p.communicate(timeout=5)
+            logger.debug("read err %s" % (err))
+        except Exception as e:
+            logger.debug(e)
+            pass
+    def shutdown(self):
+        if self.p != None:
+            self.p.terminate()
+            self.p.wait()
+            logger.debug("dnssd has terminated.")
+
 
 class Message(object):
     def __init__(self, node,action):
@@ -153,14 +179,16 @@ class NodeBase(object):
 
     def do_action(self, queue, event):
         
-
+        
         # while not queue.empty():
-        while not event.is_set() or not queue.empty():
+        while not event.is_set() and not queue.empty():
             node = queue.get()
             # index = queue.qsize() % self.max_size
             logger.debug("current index = %d"%self.index)
             self.index = self.index+1
-            return self.run(node, self.index)
+            ret =self.run(node, self.index)
+            
+            return ret
         return None
 
     def run(self, node, index):
@@ -175,7 +203,7 @@ class NodeBase(object):
         # self.event = threading.Event()
 
         # executor = ThreadPoolExecutor(max_workers=self.max_size)
-
+        self.index = 0
         logger.debug(" pipeline size = %d" % self.pipeline.qsize())
         self.tasks = [
             self.executor.submit(self.do_action, self.pipeline, self.event)
@@ -183,7 +211,7 @@ class NodeBase(object):
         ]
 
         # self.tasks = executor.map(self.do_action, self.pipeline, self.event, self.items)
-        self.event.set()
+        # self.event.set()
 
 
 class Subscribe(NodeBase):
@@ -245,7 +273,8 @@ class Subscribe(NodeBase):
         servers = []
         for future in as_completed(self.tasks):
             data = future.result()
-            servers = servers + data
+            if data is not None: 
+                servers = servers + data
         wait(self.tasks, return_when=ALL_COMPLETED)
 
         logger.info("TOTAL SERVICES[%d]" % (len(servers)))    
@@ -311,19 +340,31 @@ class ConnectTest(NodeBase):
         try:
             test = V2RayCore(node, index, self.args, TEST_PORT_BASE)
             test.run_v2ray()
-            r = test.test_connect()            
+            # urls=[]
+            # urls.append(self.args.urls[0])
+            # urls.append(self.args.urls[1])
+            # r = test.test_connect(urls)  
+            r = test.test_connect(self.args.urls)  
+            found = False
+            for item in r:                  
+                # node.speed_detail[item['url']]=item['speed']
+                node.speed_info = {item['url']:item['speed']}
+                if item['speed']>0:
+                    found = True
+                    node.speed = item['speed']        
             test.shutdown()            
-            if r>0:
+            if found>0:
                 logger.info("[%d] %s -- OK " % (index, node.remark))
                 self.make_qrcode_png(node)
                 ret = node
             else:
                 logger.info("[%d] %s -- FAIL " % (index, node.remark))
         except Exception as e:            
-            logger.debug(e)
+            # logger.error(e)
             logger.info("[%d] %s -- FAIL " % ( index,node.remark))
         finally:
             test.shutdown() 
+
         return ret
 
     def start_test(self, server_list):
@@ -338,14 +379,23 @@ class ConnectTest(NodeBase):
             self.items.append(item)
             self.pipeline.put(item)
         self.start()
+        dnssd = DNSSD("v2-scanning",txt="scan urls=%d"%len(server_list))
+        dnssd.run()       
 
         
-        wait(self.tasks, return_when=ALL_COMPLETED)
+        count = 0
+        
+        
         for future in as_completed(self.tasks):
             data = future.result()
             if data is not None:
                 servers.append(data)
+            count = count+1
+            payload = {'tid':'service','data': {'total':len(self.tasks),'index':count}}
+            self.args.task_cli.put('progress', payload)
 
+        wait(self.tasks, return_when=ALL_COMPLETED)
+        dnssd.shutdown() 
         return servers
 
 
@@ -363,13 +413,15 @@ class ProxyManager(NodeBase):
         ret = None
         port =PROXY_PORT_BASE + index
         try:
+            self.args.single_test = True
             test = V2RayCore(node, index, self.args, PROXY_PORT_BASE)
             test.run_v2ray()
             count = 5
             flag = True
+            
             while count > 0:
                 # print("[%s]OFFER PORT:%d" % (node.remark,PROXY_PORT_BASE + index))                
-                speed = test.test_connect()
+                speed,url = test.test_connect(self.args.urls)
                 node.proxy_port= PROXY_PORT_BASE + index
                 node.speed = speed
                 if  speed  <0:
@@ -379,7 +431,7 @@ class ProxyManager(NodeBase):
                 else:
                     flag = True
                 self.message_queue.put(Message(node,"update"))
-                time.sleep(36)
+                time.sleep(30)
             self.message_queue.put(Message(node,"delete"))
             # logger.info("[%s][%d] LOST " % (node.remark,PROXY_PORT_BASE + index))
         except Exception as e:
@@ -387,6 +439,7 @@ class ProxyManager(NodeBase):
         finally:
             print("[%s][%d]finaylly done to shutdown"%(node.remark,port))
             test.shutdown()     
+               
         return ret
 
     def offer(self, server_list):
@@ -420,39 +473,46 @@ class ProxyManager(NodeBase):
 
 
 
-
-
 class OnlyOneService(NodeBase):
     def __init__(self, args):
         args.threads = 1
         super(OnlyOneService, self).__init__(args)
         self.args = args
+        self.dnssd = None
+        self.runing= 0
 
     def run(self, node, index):
         ret = None
-        port =PROXY_PORT_BASE + index
+        port =PROXY_PORT_BASE + 1
+        index =1
         try:
             test = V2RayCore(node, index, self.args, PROXY_PORT_BASE)
             test.balance_service(self.args.services)
             test.run_v2ray()
             count = 5
             flag = True
-            while count > 0:
-                                
-                speed = test.test_connect()
-                logger.info("%d, [%d]ms" % (PROXY_PORT_BASE + index,speed))
-                if  speed  <0:
-                    if not flag:
-                        count = count -1
-                    flag = False
-                else:
-                    flag = True
-                time.sleep(30)
+            aa =0
+            self.runing= 1
+            while not self.event.is_set() and count > 0:
+                print("[%s]OFFER PORT:%d" % (node.remark,PROXY_PORT_BASE + index))
+
+                # if aa > 30:                
+                #     speed = test.test_connect()
+                #     if  speed  <0:
+                #         if not flag:
+                #             count = count -1
+                #         flag = False
+                #     else:
+                #         flag = True
+                #     aa =0                    
+                time.sleep(1)
+                aa =aa +1
             # logger.info("[%s][%d] LOST " % (node.remark,PROXY_PORT_BASE + index))
         except Exception as e:
             logger.error(e)
         finally:
             print("finaylly done to shutdown")
+            self.runing= 0
             test.shutdown()     
         return ret
 
@@ -462,5 +522,115 @@ class OnlyOneService(NodeBase):
         self.items.append(services[0])
         self.pipeline.put(services[0])
         self.args.services = services
+        dnssd = DNSSD("v2",txt="services=%d"%len(services))
+        dnssd.run()
         self.start()
         wait(self.tasks, return_when=ALL_COMPLETED)
+        dnssd.shutdown()
+
+    def offer_no_wait(self,services):
+        # for item in services:            
+        #     self.make_qrcode_png(item)
+        self.items.append(services[0])
+        self.pipeline.put(services[0])
+        self.args.services = services
+
+        if  len(self.tasks)>0:
+            self.event.set()
+            wait(self.tasks, return_when=ALL_COMPLETED)
+            self.event.clear()
+
+        if self.dnssd is None:
+            self.dnssd = DNSSD("v2",txt="services=%d"%len(services))
+        self.dnssd.shutdown()
+        self.dnssd.run()       
+        self.start()
+
+    def shut_down(self):
+        if  len(self.tasks)>0:
+            self.event.set()
+            wait(self.tasks, return_when=ALL_COMPLETED)
+            self.event.clear()
+
+class MultiServiceManager(ProxyManager):
+    def __init__(self, args):
+        super(ProxyManager, self).__init__(args)
+        self.args =args
+        self.runing= 0
+    def run(self, node, index):
+        ret = None
+        port =PROXY_PORT_BASE + index
+        try:
+            self.runing =self.runing+1
+            test = V2RayCore(node, index, self.args, PROXY_PORT_BASE)
+            test.run_v2ray()
+            # self.items[index].proxy_port = port
+            count = 5
+            flag = True
+            bb=len(self.args.urls)*self.args.connect_timeout*2
+            aa = bb +1
+            while count > 0:
+                # print("[%s]OFFER PORT:%d" % (node.remark,PROXY_PORT_BASE + index))                
+                
+                if aa > bb:                
+                    r = test.test_connect(self.args.urls)
+                    # node.speed_detail[url]=speed
+                    
+
+                    found = False
+                    for item in r:  
+                        # node.speed_detail[item['url']]=item['speed'] 
+                        node.speed_info[item['url']] = item['speed']
+                        if item['speed']>=0:
+                            found = True
+                            node.speed = item['speed']   
+                        
+
+                    # payload = {'tid': url2tid(node.remark+node.uuid), 'data': {'speed':speed,'url':url}}
+                    # self.args.task_cli.put('speed_result', payload)
+                    logger.debug("ndoe: %d ,%s"%(id(node),json.dumps(node.speed_info)))
+                    # break
+                    if  not found:
+                        if not flag:
+                            count = count -1
+                        flag = False
+                    else:
+                        flag = True
+                    aa =0  
+                time.sleep(1)
+                aa =aa+1
+            # logger.info("[%s][%d] LOST " % (node.remark,PROXY_PORT_BASE + index))
+        except Exception as e:
+            logger.error(e)
+        finally:
+            print("[%s][%d]finaylly done to shutdown"%(node.remark,port))
+            test.shutdown()     
+            self.runing =self.runing-1   
+            self.items.remove(node)
+        return ret
+
+    def offer_no_wait(self,services):
+        if len(services) == 0:
+            logger.error("servers is empty.")
+            return []
+
+        if  len(self.tasks)>0:
+            self.event.set()
+            wait(self.tasks, return_when=ALL_COMPLETED)
+            self.event.clear()
+            self.index= 0
+        
+        for index,item in  enumerate(services):
+            if index < self.max_size:
+                self.items.append(item)
+                logger.debug("add item: %d"%(id(item)))
+                item.proxy_port=PROXY_PORT_BASE+index
+                self.pipeline.put(item)
+
+        self.start()
+
+    def shut_down(self):
+        if  len(self.tasks)>0:
+            self.event.set()
+            wait(self.tasks, return_when=ALL_COMPLETED)
+            self.event.clear()
