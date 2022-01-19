@@ -11,6 +11,8 @@ from web.web import WebServer
 from msg import MsgMgr
 from worker import Worker
 
+from config import v2ray_conf, conf
+
 # from .utils import state_name
 
 state_index = {"all": 0, "downloading": 1, "paused": 2, "finished": 3, "invalid": 4}
@@ -33,8 +35,9 @@ class WebMsgDispatcher(object):
     RequestErrorMsg = {"status": "error", "errmsg": "Request error"}
 
     @classmethod
-    def init(cls, task_mgr):
+    def init(cls, task_mgr,conf):
         cls._task_mgr = task_mgr
+        cls._conf = conf
 
     @classmethod
     def event_state(cls, svr, event, data, args):
@@ -90,7 +93,8 @@ class WebMsgDispatcher(object):
     def event_pac(cls, svr, event, data, args):
         
         valid_ports = cls._task_mgr.pac_valid_ports()
-        svr.put(valid_ports)
+        # svr.put(valid_ports)
+        svr.put(cls._conf.v2ray_conf.make_pac_file(data['param'],valid_ports))
 
     @classmethod
     def event_reboot(cls, svr, event, data, args):
@@ -98,6 +102,25 @@ class WebMsgDispatcher(object):
         msg = cls._task_mgr.reboot()
         svr.put(msg)
 
+    @classmethod
+    def event_config(cls, svr, event, data, arg):
+        act = data['act']
+
+        ret_val = cls.RequestErrorMsg
+        if   act == 'get':
+            ret_val = {'status': 'success'}
+            ret_val['config'] = cls._conf.dict()
+        elif act == 'update':
+            conf_dict = data['param']
+            cls._conf.load(conf_dict)
+            suc, msg = cls._conf.save2file()
+            if suc:
+                ret_val = cls.SuccessMsg
+            else:
+                ret_val = {'status': 'error', 'errmsg': msg}
+
+        svr.put(ret_val)
+           
 
 class WorkMsgDispatcher(object):
 
@@ -176,9 +199,10 @@ class Task(object):
 
 
 class TaskManager(object):
-    def __init__(self, args, msg_cli):
+    def __init__(self, args, msg_cli,conf):
         self.args = args
         self._msg_cli = msg_cli
+        self._conf = conf
         self._tasks_dict = {}
         self.services = parse_sub_file(self.args,args.root_dir, args.subFilePath)
         # self.queue = queue.Queue(20)
@@ -197,6 +221,9 @@ class TaskManager(object):
             logger.debug("get task")
             task = self.queue.get()
             task.start()
+
+    
+    
 
     def on_subscribe(self):
 
@@ -305,7 +332,7 @@ class TaskManager(object):
             t['eta']=str(item.proxy_port)
             t['elapsed']=665       
 
-            if self.args.urls[0]  in item.speed_detail:
+            if len(self.args.urls) >0 and self.args.urls[0]  in item.speed_detail:
                 t['filename']=self.args.urls[0]  
                 t['total_bytes_estmt']=item.speed_detail[self.args.urls[0]]
                     
@@ -461,22 +488,43 @@ class TaskManager(object):
         if tid not in self._tasks_dict:
             raise TaskInexistenceError('task does not exist')
 
+def load_conf_from_file(args):
+    conf_file = args.config
+    logger.info('load config file (%s)' %(conf_file))
+
+    if  conf_file is None:
+        return (None, {}, {})
+
+    abs_file = args.configFilePath
+    try:
+        with open(abs_file) as f:
+            return (abs_file, json.load(f))
+    except FileNotFoundError as e:
+        logger.critical("Config file (%s) doesn't exist", abs_file)
+        exit(1)
 
 def start_service(args):
+
+
+    conf_file, conf_dict = load_conf_from_file(args)
+    _conf = conf(conf_file, conf_dict=conf_dict)
+    logger.debug("configuration: \n%s", json.dumps(_conf.dict(), indent=4))
+
+    args.urls=_conf.v2ray_conf.get_filter_urls()
     msg_mgr = MsgMgr()
     web_cli = msg_mgr.new_cli("server")
     task_cli = msg_mgr.new_cli()
 
     args.task_cli = task_cli
 
-    task_mgr = TaskManager(args, task_cli)
+    task_mgr = TaskManager(args, task_cli,_conf)
 
-    WebMsgDispatcher.init(task_mgr)
+    WebMsgDispatcher.init(task_mgr,_conf)
     WorkMsgDispatcher.init(task_mgr)
 
     msg_mgr.reg_event("list", WebMsgDispatcher.event_list)
     msg_mgr.reg_event("state", WebMsgDispatcher.event_state)
-    msg_mgr.reg_event("config", WebMsgDispatcher.event_state)
+    msg_mgr.reg_event("config", WebMsgDispatcher.event_config)
     msg_mgr.reg_event("start_all", WebMsgDispatcher.event_start_all)
     msg_mgr.reg_event("subscribe", WebMsgDispatcher.event_subscribe)
     msg_mgr.reg_event('query',      WebMsgDispatcher.event_query)
@@ -489,7 +537,7 @@ def start_service(args):
     msg_mgr.reg_event("worker_done", WorkMsgDispatcher.event_worker_done)
     msg_mgr.reg_event("speed_result", WorkMsgDispatcher.event_speed_result)
 
-    web_server = WebServer(web_cli, "0.0.0.0", "30000")
+    web_server = WebServer(web_cli,  _conf['server']['host'], _conf['server']['port'])
     web_server.start()
 
     task_mgr.start_all()
@@ -537,6 +585,9 @@ if __name__ == "__main__":
     parser.add_argument(
         "-d", "--root_dir", help="read and write directory", default="/data/v2"
     )
+    parser.add_argument(
+        "-c", "--config", help="config file ", default="config.json"
+    )
     parser.add_argument("-v", "--verbose", help="Verbose logging", action="store_true")
     args = parser.parse_args()
     if args.verbose:
@@ -546,6 +597,7 @@ if __name__ == "__main__":
         os.makedirs(args.root_dir)
     dir_path = os.path.dirname(os.path.realpath(__file__))
     subFilePath = os.path.join(args.root_dir, "v2sub.conf")
+    configFilePath = os.path.join(args.root_dir, args.config)
     args.exe_path = os.path.join(
         os.path.dirname(os.path.realpath(__file__)), "v2ray-core", os.name, "v2ray"
     )
@@ -553,8 +605,10 @@ if __name__ == "__main__":
     if os.name == "linux":
         pass
     elif os.name == "nt":
-        args.root_dir = args.exe_path 
+        args.root_dir = os.path.join(
+        os.path.dirname(os.path.realpath(__file__)), "v2ray-core", os.name ) 
         subFilePath = os.path.join(dir_path, "v2sub.conf")
+        configFilePath = os.path.join(dir_path, args.config)
         args.proxies = {
             "http": "http://linyaoji:fuckyou==123@10.255.251.141:8080",
             "https": "http://linyaoji:fuckyou==123@10.255.251.141:8080",
@@ -566,6 +620,9 @@ if __name__ == "__main__":
         
     if not os.path.exists(subFilePath):
         shutil.copy(os.path.join(dir_path, "v2sub.conf"), subFilePath)
+    
+    if not os.path.exists(configFilePath):
+        shutil.copy(os.path.join(dir_path, "config.json"), configFilePath)
 
     args.urls = [
         'https://www.youtube.com',
@@ -584,6 +641,7 @@ if __name__ == "__main__":
         logger.error("rmdir error.[%s]" % (e))
 
     args.subFilePath = subFilePath
+    args.configFilePath = configFilePath
 
     # startTest(args)
     start_service(args)

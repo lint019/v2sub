@@ -105,55 +105,7 @@ pac_script0 = (
 '}  '
 )
 
-pac_script = (
-'function FindProxyForURL(url, host)'
-'{  '
-'   '
-'   url = url.toLowerCase();    '
-'   host = host.toLowerCase();  '
-'   '
-'   var hostOrDomainIs = function(host, val) {  '
-'      return (host === val) || dnsDomainIs(host, "." + val);   '
-'   };  '
-'   '
-'   var hostIs = function(host, val) {  '
-'	  return (host === val);    '
-'   };  '
-'       '
-'       '
-'   if (isPlainHostName(host))  '
-'   {   '
-'      return "DIRECT"; '
-'   }   '
-'   '
-'   if (isResolvable(host)) '
-'   {   '
-'      var hostIP = dnsResolve(host);   '
-'      if (!shExpMatch(hostIP, "*:*"))  '
-'      {    '
-'        /* Don"t proxy non-routable addresses (RFC 3330) */    '
-'        if (isInNet(hostIP, "0.0.0.0", "255.0.0.0") || '
-'        isInNet(hostIP, "10.0.0.0", "255.0.0.0") ||    '
-'        isInNet(hostIP, "127.0.0.0", "255.0.0.0") ||   '
-'        isInNet(hostIP, "169.254.0.0", "255.255.0.0") ||   '
-'        isInNet(hostIP, "172.16.0.0", "255.240.0.0") ||    '
-'        isInNet(hostIP, "192.0.2.0", "255.255.255.0") ||   '
-'        isInNet(hostIP, "192.88.99.0", "255.255.255.0") || '
-'        isInNet(hostIP, "192.168.0.0", "255.255.0.0") ||   '
-'        isInNet(hostIP, "198.18.0.0", "255.254.0.0") ||    '
-'        isInNet(hostIP, "224.0.0.0", "240.0.0.0") ||   '
-'        isInNet(hostIP, "240.0.0.0", "240.0.0.0")) '
-'        {  '
-'           return "DIRECT";    '
-'        }  '
-'      }    '
-'   }   \r\n    '
-'    %s         '
-'   '
-'       '
-'   return "DIRECT";    '
-'}  '
-)
+
 
 
 
@@ -259,45 +211,24 @@ def qrcode_task(tid):
 
 @app.route('/default.pac', methods=['GET', 'POST'])
 def pac():
-    MSG.put('pac', {})
+
     # host = request.host_addr
     host = request.host.split(':')[0]
-    list = MSG.get()
-    proxy_string = ''
-
-    url_function = """\r\n	if (    
-    	%s
-       )   
-       {   
-          return "%s";    
-       }   """
-            # sample:
-    # [{'url':'youtube.com','list':[{'port':20083,'speed':222},{'port':20081,'speed':222}]}]
-    
-
-    # print("This is an example wsgi app served from {} to {}".format(request.remote_addr, request.remote_addr))
-
-    # for item in list:
-    #     proxy_string =proxy_string +"HTTPS %s:%d;PROXY %s:%d;SOCKS %s:%d; "%(host,item,host,item,host,item)
-
-    function_scripts = ''
-    for item in list:
-        proxy_string =''
-        for it in item['list']:
-            proxy_string =proxy_string +"HTTPS %s:%d;PROXY %s:%d;SOCKS %s:%d; "%(host,it['port'],host,it['port'],host,it['port'])
-
-        filter_list=url_map[item['url']] 
-        script_str = ''
-        for it in filter_list:
-            script_str=script_str+'(shExpMatch(host, "%s"))||'%it
-        script_str=script_str+'false'    
-        function_scripts = function_scripts + url_function%(script_str,proxy_string)
-
-    rsp = make_response(pac_script%(function_scripts),200)
+    payload = {}
+    if request.method == 'POST':
+        payload['act'] = 'update'
+        payload['param'] = request.get_json()
+    else:
+        payload['act'] = 'get'
+        payload['param'] = host
+    MSG.put('pac', payload)
+    rsp = make_response(MSG.get())
     # rsp = make_response(pac_script%(proxy_string),200)
     rsp.headers['Content-Type']= 'text;'
-    # rsp.headers['Content-Type']= 'application/x-ns-proxy-autoconfig;'
+
     return rsp
+
+    
 
 
 @app.route('/config', methods=['GET', 'POST'])

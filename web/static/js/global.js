@@ -15,7 +15,7 @@ var videoDownload = (function (Vue, extendAM){
         modalData: {
             add: { url: '', ydl_opts: {} },
             remove: { removeFile: false },
-            preference: {youtube_dl: {fomart: '', proxy: ''}, general: {download_dir: '', db_path: '', log_size: '', ratelimit: '', outtmpl: ''}},
+            preference: {v2ray: {format: '', proxy: '', ratelimit: '', outtmpl: ''}, general: {download_dir: '', db_path: '', log_size: ''}},
         },
         currentSelected: null,
         taskDetails: {},
@@ -198,10 +198,10 @@ var videoDownload = (function (Vue, extendAM){
                             _self.modalData.preference.general.download_dir = config.general.download_dir;
                             _self.modalData.preference.general.db_path = config.general.db_path;
                             _self.modalData.preference.general.log_size = config.general.log_size;
-                            _self.modalData.preference.youtube_dl.format = config.youtube_dl.format;
-                            _self.modalData.preference.youtube_dl.proxy = config.youtube_dl.proxy;
-                            _self.modalData.preference.youtube_dl.ratelimit = config.youtube_dl.ratelimit;
-                            _self.modalData.preference.youtube_dl.outtmpl = config.youtube_dl.outtmpl;
+                            _self.modalData.preference.v2ray.format = config.v2ray.format;
+                            _self.modalData.preference.v2ray.proxy = config.v2ray.proxy;
+                            _self.modalData.preference.v2ray.ratelimit = config.v2ray.ratelimit;
+                            _self.modalData.preference.v2ray.outtmpl = config.v2ray.outtmpl;
                         }
                     });
                 },

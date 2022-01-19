@@ -1,0 +1,19 @@
+{
+    "v2ray": {
+        "proxy": "344343",
+        "format": "43434",
+        "ratelimit": 1048576,
+        "outtmpl": "{     \n\n\"https://www.youtube.com\":[\"googlevideo.com\",\"googlevideo\",\"google\",\"youtube.com\"],             \"https://www.github.com\":[\"github\",\"g\"],     \"https://www.twitter.com\":[\"twimg\",\"t.co\",\"twitter\"],     \"https://www.gettr.com\":[\"gettr.com\"],     \"https://www.gtv.org\":[\"gtv.org\"],     \"https://www.xvideos.com\":[\"xvideos.com\"],     \"https://www.pornhub.com\":[\"pornhub.com\"]\n }",
+        "global": false
+    },
+    "server": {
+        "host": "0.0.0.0",
+        "port": "30000"
+    },
+    "general": {
+        "download_dir": "C:\\Users\\linyaoji/Downloads/youtube-dl",
+        "db_path": "C:\\Users\\linyaoji/Downloads/youtube-dl/youtube_dl_webui.db",
+        "root_dir": "/data/v2           ",
+        "log_size": 10
+    }
+}
