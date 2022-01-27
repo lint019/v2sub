@@ -130,20 +130,11 @@
                             <label>Log Size:</label><input type="text" ref="log-size" v-model="modalData.preference.general.log_size" v-cloak @keyup.esc="showModal = false"/>
                         </div>
                         <div style="text-align:center;">
-                            <hr class="left-hr" /><span style="font-weight: bold;">youtube-dl options</span><hr class="right-hr" />
-                        </div>
+                            <hr class="left-hr" /><span style="font-weight: bold;">options</span><hr class="right-hr" />
+                        </div>                        
                         <div>
-                            <label>Format:</label><input type="text" ref="format" v-model="modalData.preference.v2ray.format" v-cloak @keyup.esc="showModal = false"/>
-                        </div>
-                        <div>
-                            <label>Proxy:</label><input type="text" ref="proxy" v-model="modalData.preference.v2ray.proxy" v-cloak @keyup.esc="showModal = false"/>
-                        </div>
-                        <div>
-                            <label>Out Tmpl:</label><textarea  ref="outtmpl" v-model="modalData.preference.v2ray.outtmpl" v-cloak @keyup.esc="showModal = false"> </textarea>
-                        </div>
-                        <div>
-                            <label>Rate Limit:</label><input type="text" ref="ratelimit" v-model="modalData.preference.v2ray.ratelimit" v-cloak @keyup.esc="showModal = false"/>
-                        </div>
+                            <label>pac filter:</label><textarea  ref="outtmpl" v-model="modalData.preference.v2ray.outtmpl" v-cloak @keyup.esc="showModal = false"> </textarea>
+                        </div>                  
                     </div>
                     <div slot="footer">
                         <button class="modal-default-button" @click="updatePreference" style="width:auto;">save</button>

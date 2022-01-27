@@ -210,7 +210,7 @@ class TaskManager(object):
         # thread.start()
         self.sub_manager = Subscribe(args)
         self.connect_tester= ConnectTest(args)
-        self.offer_manager = MultiServiceManager(args)
+        self.offer_manager = HaproxyManager(args)
         # self.offer_manager = OnlyOneService(args)
         self.alvailableds=[]
         self._tasks_dict["state"]="invalid"
@@ -292,13 +292,13 @@ class TaskManager(object):
     def list(self, state, exerpt=False):
         detail = []
         a =0
-        process = '100%'
+        process = 0
         if self._tasks_dict["state"]=="downloading":
             a = len(self.services)
             if "progress" in self._tasks_dict:
-                process =str(int(self._tasks_dict['progress']['index']/self._tasks_dict['progress']['total']*100))+'%'
+                process =int(self._tasks_dict['progress']['index']/self._tasks_dict['progress']['total']*100)
 
-        counter = {'downloading': a, 'paused': len(self.services)-a, 'finished': len(self.alvailableds), 'invalid': len(self.offer_manager.items)}
+        counter = {'progress':process,'downloading': a, 'paused': len(self.services)-a, 'finished': len(self.alvailableds), 'invalid': len(self.offer_manager.items)}
         list=[]
         if state=='finished':
             list= self.alvailableds
@@ -324,7 +324,7 @@ class TaskManager(object):
             #     t["speed"]='10'
             #     t['total_bytes']=0
             t['total_bytes']=item.speed
-            t['percent']=process           
+            t['percent']=str(process) +"%"          
             t['filename']=665          
             t['tmpfilename']=665       
             t['downloaded_bytes']=665                    
@@ -463,9 +463,12 @@ class TaskManager(object):
     def offer(self):
         detail = []
         counter = len(self.alvailableds)
+        # counter = len(self.services)
         if counter>0:
             try:
-                self.offer_manager.offer_no_wait(self.alvailableds)
+                # self.offer_manager.offer_no_wait(self.alvailableds)
+                self.offer_manager.offer(self.alvailableds)
+                # self.offer_manager.offer(self.services)
                 # self.alvailableds =self.connect_tester.start_test(self.alvailableds)
                 logger.info('OFFER COUNT(%d)' %(counter))
             except Exception as e:
@@ -613,10 +616,12 @@ if __name__ == "__main__":
             "http": "http://linyaoji:fuckyou==123@10.255.251.141:8080",
             "https": "http://linyaoji:fuckyou==123@10.255.251.141:8080",
         }
+        args.haproxy_exec_path = "cmd.exe"
     elif os.name == "posix":
         pathlib.Path(os.path.join(args.root_dir, "qrcode")).mkdir(
             parents=True, exist_ok=True
         )
+        args.haproxy_exec_path = os.path.join(dir_path,"haproxy","android","haproxy")
         
     if not os.path.exists(subFilePath):
         shutil.copy(os.path.join(dir_path, "v2sub.conf"), subFilePath)
@@ -624,14 +629,17 @@ if __name__ == "__main__":
     if not os.path.exists(configFilePath):
         shutil.copy(os.path.join(dir_path, "config.json"), configFilePath)
 
+    # args.urls = [
+    #     'https://www.youtube.com',
+    #     'https://www.github.com',
+    #     'https://www.twitter.com',
+    #     'https://www.gettr.com',
+    #     'https://www.gtv.org',
+    #     'https://www.xvideos.com',
+    #     'https://www.pornhub.com',
+    #     ]
     args.urls = [
         'https://www.youtube.com',
-        'https://www.github.com',
-        'https://www.twitter.com',
-        'https://www.gettr.com',
-        'https://www.gtv.org',
-        'https://www.xvideos.com',
-        'https://www.pornhub.com',
         ]
 
     args.qrcode_path = os.path.join(args.root_dir, "qrcode")

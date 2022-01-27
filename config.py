@@ -117,7 +117,7 @@ class gen_conf(conf_base):
 class svr_conf(conf_base):
     _valid_fields = [
             #(key,              default_val,                type,       validate_regex,     call_function)
-            ('host',            '127.0.0.1',                'string',   None,               None),
+            ('host',            '0.0.0.0',                'string',   None,               None),
             ('port',            '30000',                    'string',   None,               None),
         ]
 
@@ -176,13 +176,14 @@ class v2ray_conf(conf_base):
         for item in port_list:
             proxy_string =''
             for it in item['list']:
-                proxy_string =proxy_string +"HTTPS %s:%d;PROXY %s:%d;SOCKS %s:%d; "%(host,it['port'],host,it['port'],host,it['port'])
+                # proxy_string =proxy_string +"HTTPS %s:%d;PROXY %s:%d;SOCKS %s:%d; "%(host,it['port'],host,it['port'],host,it['port'])
+                proxy_string =proxy_string +"HTTPS %s:%d;PROXY %s:%d;SOCKS %s:%d; "%(host,30001,host,30001,host,30001)
 
             filter_list=url_map[item['url']] 
-            script_str = ''
+            script_str = "false"
             for it in filter_list:
-                script_str=script_str+'(shExpMatch(host, "*%s*"))||'%it
-            script_str=script_str+'false'    
+                script_str=script_str+'||(shExpMatch(host, "*%s*"))'%it
+            script_str=script_str.replace("false||","")    
             function_scripts = function_scripts + url_function%(script_str,proxy_string)
 
         return pac_script%(function_scripts)

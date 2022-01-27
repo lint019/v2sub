@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+
+</head>
+
+<body>
+    <div id="app">
+        <v-app>
+            <v-main>
+                <v-container>
+
+                    <template>
+
+
+                        <v-row justify="center">
+                            <v-col cols="12" sm="8" md="6">
+                                <v-sheet class="overflow-hidden" style="position: relative;">
+                                    <v-container class="fill-height">
+                                        <v-row align="center" justify="center">
+                                            <!-- <v-btn
+                                    color="pink"
+                                    dark
+                                    @click.stop="drawer = !drawer"
+                                  >
+                                    Toggle
+
+                                  </v-btn> -->
+
+                                            <v-card>
+                                                <v-toolbar dense>
+                                                    <v-app-bar-nav-icon @click.stop="drawer = !drawer">
+
+                                                    </v-app-bar-nav-icon>
+
+                                                    <v-toolbar-title>{{"{{selected_url}}"}}</v-toolbar-title>
+
+                                                    <v-spacer></v-spacer>
+
+                                                    <v-btn icon @click="subscribe">
+
+                                                        <v-icon>mdi-magnify</v-icon>
+                                                        <v-badge color="green"
+                                                            v-bind:content="stateCounter.downloading">
+                                                        </v-badge>
+                                                    </v-btn>
+
+                                                    <v-btn icon @click="startAll">
+                                                        <v-icon :loading="stateCounter.progress > 0">mdi-heart</v-icon>
+                                                        <v-badge color="green" v-bind:content="stateCounter.paused">
+                                                        </v-badge>
+                                                    </v-btn>
+
+                                                    <v-btn icon @click="offer">
+                                                        <v-icon>mdi-dots-vertical</v-icon>
+                                                        <v-badge color="green" v-bind:content="stateCounter.invalid">
+                                                        </v-badge>
+                                                    </v-btn>
+                                                    <v-progress-linear v-if="stateCounter.progress > 0 " v-model="stateCounter.progress" absolute bottom
+                                                        color="deep-purple accent-4"></v-progress-linear>
+
+                                                </v-toolbar>
+
+                                                <v-subheader></v-subheader>
+                                                <v-expansion-panels>
+
+                                                    <v-expansion-panel v-for="(video, index) in videoList"
+                                                        @click="selected(index)" :key="index">
+                                                        <v-expansion-panel-header v-slot="{ open }">
+                                                            <v-row no-gutters>
+                                                                <v-col cols="10">
+                                                                    {{"{{video.title}}"}}
+                                                                </v-col>
+                                                                <v-col cols="2" class="text--secondary">
+                                                                    <v-fade-transition leave-absolute>
+                                                                        <span v-if="!open">{{"{{video.total_bytes}}"}}</span>
+                                                                        <!-- <v-row v-else no-gutters style="width: 100%">
+                                                                            <v-col cols="6">
+                                                                                速度: {{"{{video.speed}}"}}
+                                                                            </v-col>
+                                                                            <v-col cols="6">
+                                                                                端口: {{"{{video.proxy_port}}"}}
+                                                                            </v-col>
+                                                                        </v-row> -->
+                                                                    </v-fade-transition>
+                                                                </v-col>
+                                                            </v-row>
+                                                        </v-expansion-panel-header>
+                                                        <v-expansion-panel-content>
+                                                            <v-row justify="space-around" no-gutters>
+                                                                <v-card class="my-12" width="400">
+                                                                    <v-img v-bind:src="taskDetails.thumbnail"
+                                                                        height="225" contain class="grey">
+                                                                    </v-img>                                                                  
+                                                                    <div class="my-12 text-subtitle-1">
+                                                                        速度: {{"{{video.total_bytes}}"}}
+                                                                    </div>
+                                                                    <div class="my-12 text-subtitle-1">
+                                                                        端口: {{"{{video.eta}}"}}
+                                                                    </div>
+                                                                </v-card>
+
+                                                            </v-row>
+                                                        </v-expansion-panel-content>
+                                                    </v-expansion-panel>
+                                                </v-expansion-panels>
+                                                <v-subheader></v-subheader>
+                                                <v-expansion-panels>
+                                                    <v-expansion-panel>
+                                                        <v-expansion-panel-header>
+                                                            <template v-slot:default="{ open }">
+                                                                <v-row no-gutters>
+                                                                    <v-col cols="4">
+                                                                        Trip name
+                                                                    </v-col>
+                                                                    <v-col cols="8" class="text--secondary">
+                                                                        <v-fade-transition leave-absolute>
+                                                                            <span v-if="open" key="0">
+                                                                                Enter a name for the trip
+                                                                            </span>
+                                                                            <span v-else key="1">
+                                                                                {{"{{ trip.name }}"}}
+                                                                            </span>
+                                                                        </v-fade-transition>
+                                                                    </v-col>
+                                                                </v-row>
+                                                            </template>
+                                                        </v-expansion-panel-header>
+                                                        <v-expansion-panel-content>
+                                                            <v-text-field v-model="trip.name"
+                                                                placeholder="Caribbean Cruise">
+                                                            </v-text-field>
+                                                        </v-expansion-panel-content>
+                                                    </v-expansion-panel>
+
+                                                    <v-expansion-panel>
+                                                        <v-expansion-panel-header v-slot="{ open }">
+                                                            <v-row no-gutters>
+                                                                <v-col cols="4">
+                                                                    Location
+                                                                </v-col>
+                                                                <v-col cols="8" class="text--secondary">
+                                                                    <v-fade-transition leave-absolute>
+                                                                        <span v-if="open" key="0">
+                                                                            Select trip destination
+                                                                        </span>
+                                                                        <span v-else key="1">
+                                                                            {{"{{ trip.location }}"}}
+                                                                        </span>
+                                                                    </v-fade-transition>
+                                                                </v-col>
+                                                            </v-row>
+                                                        </v-expansion-panel-header>
+                                                        <v-expansion-panel-content>
+                                                            <v-row no-gutters>
+                                                                <v-spacer></v-spacer>
+                                                                <v-col cols="5">
+                                                                    <v-select v-model="trip.location" :items="locations"
+                                                                        chips flat solo>
+                                                                    </v-select>
+                                                                </v-col>
+
+                                                                <v-divider vertical class="mx-4"></v-divider>
+
+                                                                <v-col cols="3">
+                                                                    Select your destination of choice
+                                                                    <br>
+                                                                    <a href="#">Learn more</a>
+                                                                </v-col>
+                                                            </v-row>
+
+                                                            <v-card-actions>
+                                                                <v-spacer></v-spacer>
+                                                                <v-btn text color="secondary">
+                                                                    Cancel
+                                                                </v-btn>
+                                                                <v-btn text color="primary">
+                                                                    Save
+                                                                </v-btn>
+                                                            </v-card-actions>
+                                                        </v-expansion-panel-content>
+                                                    </v-expansion-panel>
+
+                                                    <v-expansion-panel>
+                                                        <v-expansion-panel-header v-slot="{ open }">
+                                                            <v-row no-gutters>
+                                                                <v-col cols="4">
+                                                                    Start and end dates
+                                                                </v-col>
+                                                                <v-col cols="8" class="text--secondary">
+                                                                    <v-fade-transition leave-absolute>
+                                                                        <span v-if="open">When do you want to
+                                                                            travel?</span>
+                                                                        <v-row v-else no-gutters style="width: 100%">
+                                                                            <v-col cols="6">
+                                                                                Start date: {{"{{ trip.start }}"}}
+                                                                            </v-col>
+                                                                            <v-col cols="6">
+                                                                                End date: {{"{{ trip.end }}"}}
+                                                                            </v-col>
+                                                                        </v-row>
+                                                                    </v-fade-transition>
+                                                                </v-col>
+                                                            </v-row>
+                                                        </v-expansion-panel-header>
+                                                        <v-expansion-panel-content>
+                                                            <v-row justify="space-around" no-gutters>
+                                                                <v-col cols="3">
+                                                                    <v-menu ref="startMenu"
+                                                                        :close-on-content-click="false"
+                                                                        :return-value.sync="trip.start" offset-y
+                                                                        min-width="290px">
+                                                                        <template v-slot:activator="{ on, attrs }">
+                                                                            <v-text-field v-model="trip.start"
+                                                                                label="Start date"
+                                                                                prepend-icon="mdi-calendar" readonly
+                                                                                v-bind="attrs" v-on="on">
+                                                                            </v-text-field>
+                                                                        </template>
+                                                                        <v-date-picker v-model="date" no-title
+                                                                            scrollable>
+                                                                            <v-spacer></v-spacer>
+                                                                            <v-btn text color="primary"
+                                                                                @click="$refs.startMenu.isActive = false">
+                                                                                Cancel
+                                                                            </v-btn>
+                                                                            <v-btn text color="primary"
+                                                                                @click="$refs.startMenu.save(date)">
+                                                                                OK
+                                                                            </v-btn>
+                                                                        </v-date-picker>
+                                                                    </v-menu>
+                                                                </v-col>
+
+                                                                <v-col cols="3">
+                                                                    <v-menu ref="endMenu"
+                                                                        :close-on-content-click="false"
+                                                                        :return-value.sync="trip.end" offset-y
+                                                                        min-width="290px">
+                                                                        <template v-slot:activator="{ on, attrs }">
+                                                                            <v-text-field v-model="trip.end"
+                                                                                label="End date"
+                                                                                prepend-icon="mdi-calendar" readonly
+                                                                                v-bind="attrs" v-on="on">
+                                                                            </v-text-field>
+                                                                        </template>
+                                                                        <v-date-picker v-model="date" no-title
+                                                                            scrollable>
+                                                                            <v-spacer></v-spacer>
+                                                                            <v-btn text color="primary"
+                                                                                @click="$refs.endMenu.isActive = false">
+                                                                                Cancel
+                                                                            </v-btn>
+                                                                            <v-btn text color="primary"
+                                                                                @click="$refs.endMenu.save(date)">
+                                                                                OK
+                                                                            </v-btn>
+                                                                        </v-date-picker>
+                                                                    </v-menu>
+                                                                </v-col>
+                                                            </v-row>
+                                                        </v-expansion-panel-content>
+                                                    </v-expansion-panel>
+                                                </v-expansion-panels>
+                                            </v-card>
+                                        </v-row>
+                                    </v-container>
+
+                                    <v-navigation-drawer v-model="drawer" absolute temporary>
+                                        <v-list-item>
+                                            <v-list-item-avatar>
+                                                <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+                                            </v-list-item-avatar>
+
+                                            <v-list-item-content>
+                                                <v-list-item-title>John Leider</v-list-item-title>
+                                            </v-list-item-content>
+                                        </v-list-item>
+
+                                        <v-divider></v-divider>
+
+                                        <v-list dense>
+                                            <v-list-item @click="filterTasks('all');drawer = null">
+                                                <v-list-item-icon>
+                                                    <v-icon>mdi-home</v-icon>
+                                                </v-list-item-icon>
+
+                                                <v-list-item-title>All</v-list-item-title>
+                                            </v-list-item>
+                                            <v-list-item @click="filterTasks('finished');drawer = null">
+                                                <v-list-item-icon>
+                                                    <v-icon>mdi-home</v-icon>
+                                                </v-list-item-icon>
+
+                                                <v-list-item-title>Availabled</v-list-item-title>
+                                            </v-list-item>
+
+                                            <v-list-group :value="true" prepend-icon="mdi-account-circle"
+                                                @click="filterTasks('invalid')">
+                                                <template v-slot:activator>
+                                                    <v-list-item-title>Offers</v-list-item-title>
+                                                </template>
+
+                                                <v-list-item-group v-model="selected_url"
+                                                    active-class="deep-purple--text text--accent-4">
+                                                    <v-list-item v-for="item in items" :key="item.title" link>
+                                                        <v-list-item-icon>
+                                                            <v-icon>{{"{{ item.icon }}"}}</v-icon>
+                                                        </v-list-item-icon>
+
+                                                        <v-list-item-content>
+                                                            <v-list-item-title>{{"{{ item.title }}"}}
+                                                            </v-list-item-title>
+                                                        </v-list-item-content>
+                                                    </v-list-item>
+                                                </v-list-item-group>
+                                                </v-list-item-group>
+
+                                                <v-divider></v-divider>
+
+                                                <v-list-item @click="reboot();drawer=null">
+                                                    <v-list-item-icon>
+                                                        <v-icon>mdi-home</v-icon>
+                                                    </v-list-item-icon>
+
+                                                    <v-list-item-title>Reboot</v-list-item-title>
+                                                </v-list-item>
+
+                                                <v-list-item @click="showConfigDialog(true);drawer = null">
+                                                    <v-list-item-icon>
+                                                        <v-icon>mdi-home</v-icon>
+                                                    </v-list-item-icon>
+
+                                                    <v-list-item-title>config</v-list-item-title>
+                                                </v-list-item>
+                                        </v-list>
+
+                                    </v-navigation-drawer>
+                                </v-sheet>
+
+                        </v-row>
+
+                        <div class="text-center">
+                            <v-snackbar v-model="toast.snackbar" :multi-line="toast.multiLine">
+                                {{"{{ toast.text }}"}}
+
+                                <template v-slot:action="{ attrs }">
+                                    <v-btn color="red" text v-bind="attrs" @click="toast.snackbar = false">
+                                        Close
+                                    </v-btn>
+                                </template>
+                            </v-snackbar>
+                        </div>
+
+                    </template>
+
+                    
+                        <v-row justify="center">
+                          <v-dialog
+                            v-model="dialog"
+                            persistent
+                            max-width="600px"
+                          >
+                            <!-- <template v-slot:activator="{ on, attrs }">
+                              <v-btn
+                                color="primary"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >
+                                Open Dialog
+                              </v-btn> -->
+                            <!-- </template> -->
+                            <v-card >
+                              <v-card-title>
+                                <span class="text-h5">v2 Config</span>
+                              </v-card-title>
+                              <v-card-text>
+                                <v-container>
+                                  <v-row>
+                                 
+                                      <v-textarea
+                                        label="pac filter"
+                                        required
+                                        v-model="modalData.preference.v2ray.outtmpl"
+                                      ></v-textarea>
+                                  </v-row>
+                                </v-container>
+                              </v-card-text>
+                              <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                  color="blue darken-1"
+                                  text
+                                  @click="dialog = false"
+                                >
+                                  Close
+                                </v-btn>
+                                <v-btn
+                                  color="blue darken-1"
+                                  text
+                                  @click="updatePreference(); dialog = false;"
+                                >
+                                  Save
+                                </v-btn>
+                              </v-card-actions>
+                            </v-card>
+                          </v-dialog>
+                        </v-row>
+                      
+                </v-container>
+            </v-main>
+
+        </v-app>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/vue.min.js') }}"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/vue-resource.min.js') }}"></script> -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mobile.js') }}"></script>
+
+</body>
+
+</html>

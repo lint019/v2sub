@@ -18,97 +18,14 @@ MSG = None
 
 app = Flask(__name__)
 
-url_map={
-    'https://www.youtube.com':['*googlevideo.com*','*googlevideo*','*google*','*youtube.com*'],        
-    'https://www.github.com':['*github*','*'],
-    'https://www.twitter.com':['*twimg*','*t.co*','*twitter*'],
-    'https://www.gettr.com':['*gettr.com*'],
-    'https://www.gtv.org':['*gtv.org*'],
-    'https://www.xvideos.com':['*xvideos.com*'],
-    'https://www.pornhub.com':['*pornhub.com*'],
-}
-
-
 MSG_INVALID_REQUEST = {'status': 'error', 'errmsg': 'invalid request'}
 
-pac_script0 = (
-'function FindProxyForURL(url, host)'
-'{  '
-'   '
-'   url = url.toLowerCase();    '
-'   host = host.toLowerCase();  '
-'   '
-'   var hostOrDomainIs = function(host, val) {  '
-'      return (host === val) || dnsDomainIs(host, "." + val);   '
-'   };  '
-'   '
-'   var hostIs = function(host, val) {  '
-'	  return (host === val);    '
-'   };  '
-'       '
-'       '
-'   if (isPlainHostName(host))  '
-'   {   '
-'      return "DIRECT"; '
-'   }   '
-'   '
-'   if (isResolvable(host)) '
-'   {   '
-'      var hostIP = dnsResolve(host);   '
-'      if (!shExpMatch(hostIP, "*:*"))  '
-'      {    '
-'        /* Don"t proxy non-routable addresses (RFC 3330) */    '
-'        if (isInNet(hostIP, "0.0.0.0", "255.0.0.0") || '
-'        isInNet(hostIP, "10.0.0.0", "255.0.0.0") ||    '
-'        isInNet(hostIP, "127.0.0.0", "255.0.0.0") ||   '
-'        isInNet(hostIP, "169.254.0.0", "255.255.0.0") ||   '
-'        isInNet(hostIP, "172.16.0.0", "255.240.0.0") ||    '
-'        isInNet(hostIP, "192.0.2.0", "255.255.255.0") ||   '
-'        isInNet(hostIP, "192.88.99.0", "255.255.255.0") || '
-'        isInNet(hostIP, "192.168.0.0", "255.255.0.0") ||   '
-'        isInNet(hostIP, "198.18.0.0", "255.254.0.0") ||    '
-'        isInNet(hostIP, "224.0.0.0", "240.0.0.0") ||   '
-'        isInNet(hostIP, "240.0.0.0", "240.0.0.0")) '
-'        {  '
-'           return "DIRECT";    '
-'        }  '
-'      }    '
-'   }   \r\n    '
-'	if (    '
-'	(shExpMatch(host, "*facebook.com*")) ||  '
-'	(shExpMatch(host, "*whatsapp.com*")) ||  '
-'	(shExpMatch(host, "*instagram.com*")) || '
-'	(shExpMatch(host, "*telegram.org*")) ||  '
-'	(shExpMatch(host, "*line.me*")) ||   '
-'	(shExpMatch(host, "*twitter.com*")) ||   '
-'	(shExpMatch(host, "*youtube.com*")) ||   '
-'	(shExpMatch(host, "*netflix.com*")) ||   '
-'	(shExpMatch(host, "*hbo.com*")) ||   '
-'	(shExpMatch(host, "*gettr.com*")) ||   '
-'	(shExpMatch(host, "*gtv.org*")) ||   '
-'	(shExpMatch(host, "*xvideos.com*")) ||   '
-'	(shExpMatch(host, "*pornhub.com*")) ||   '
-'	(shExpMatch(host, "*gnews.org*")) ||   '
-'	(shExpMatch(host, "*google.com*")) ||   '
-'	(shExpMatch(host, "*google*")) ||   '
-'	(shExpMatch(host, "*twimg.com*")) ||   '
-'	(shExpMatch(host, "*t.co*")) ||   '
-'	(shExpMatch(host, "*googlevideo.com*")) ||   '
-'	(shExpMatch(host, "*cp-pv.dflzm.com*"))  '
-'   )   '
-'   {   '
-'      return "%s";    '
-'   }   '
-'   '
-'       '
-'   return "DIRECT";    '
-'}  '
-)
 
 
-
-
-
+@app.route('/mobile')
+def mobile():
+    return render_template('mobile.html')
+    
 @app.route('/')
 def index():
     return render_template('index.html')

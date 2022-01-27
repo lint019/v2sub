@@ -23,6 +23,7 @@ from v2ray import V2ray
 
 from v2ray_node import *
 from utils import *
+from haproxy import *
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(
@@ -621,11 +622,11 @@ class MultiServiceManager(ProxyManager):
             self.index= 0
         
         for index,item in  enumerate(services):
-            if index < self.max_size:
-                self.items.append(item)
-                logger.debug("add item: %d"%(id(item)))
-                item.proxy_port=PROXY_PORT_BASE+index
-                self.pipeline.put(item)
+            # if index < self.max_size:
+            self.items.append(item)
+            logger.debug("add item: %d"%(id(item)))
+            item.proxy_port=PROXY_PORT_BASE+index
+            self.pipeline.put(item)
 
         self.start()
 
@@ -634,3 +635,14 @@ class MultiServiceManager(ProxyManager):
             self.event.set()
             wait(self.tasks, return_when=ALL_COMPLETED)
             self.event.clear()
+
+
+class HaproxyManager(MultiServiceManager):
+    def __init__(self, args):
+        super(HaproxyManager, self).__init__(args)
+        self.haproxy=HaProxy(args)
+
+
+    def offer(self,services):
+        self.haproxy.run_haproxy(PROXY_PORT_BASE,len(services))
+        self.offer_no_wait(services)
